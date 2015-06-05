@@ -11,18 +11,22 @@ class MotifsTree {
 	private $distPercent;
 	private $txtpatr1="TTTW";//"GRCGHCVSWNTGTCTG";
 	private $allThePaths = array();
+	private $lenConsensus;
+	private $radioPB;
 
-	function __construct($num, $arraySeq,$d){
+	function __construct($num, $arraySeq,$d, $radioPB){
 		$this->numFam = $num;
 		$this->seqs = $arraySeq;
 		$this->distPercent = $d;
+		$this->radioPB = $radioPB;
+		$this->lenConsensus = strlen($this->txtpatr1);
 		$this->findMotifs();
 	}
 
 	private function findMotifs(){
 		foreach ($this->seqs as $seq) {
 			$this->lens[] = strlen($seq);
-			$tmp = new Comparator($seq,$this->txtpatr1);
+			$tmp = new Comparator($seq,$this->txtpatr1); //extender para todos los consensus
 			$this->motifsFound[] = $tmp->getMatches();		
 		}
 	}
@@ -32,8 +36,8 @@ class MotifsTree {
 	}
 
 
-	private function getBorders($pos, $d, $txtlen){
-		$len = ($pos*$d*1.0)/100.0;
+	private function getBorders($pos, $d, $txtlen, $prelen){
+		$len = ( ($prelen - $pos) *$d*1.0)/100.0;
 		$left = max($pos-$len, 0);
 		$right = min($pos+$len,$txtlen-1);
 		return array($left, $right);
@@ -60,7 +64,7 @@ class MotifsTree {
 			return ;
 		}
 
-		$params = $this->getBorders($pos,$d, $this->lens[$lvl]);
+		$params = $this->getBorders($pos,$d, $this->lens[$lvl],$this->lens[$lvl-1]);
 		foreach($this->motifsFound[$lvl] as $motif){
 			if ($motif > $params[0] && $motif < $params[1]){
 				$tmp_path = $path;
@@ -76,5 +80,29 @@ class MotifsTree {
 		return $this->allThePaths;
 	}
 
+	public function getStringPaths(){
+		$result = array();
+		foreach ($this->allThePaths as $path) {
+			$result[] = $this->getOnlyPath($path);
+		}
+		return $result;
+
+	}
+
+	private function getOnlyPath($path){
+		$index = 0;
+		$result = array();
+		foreach ($path as $elem) {
+			$left = $elem;
+			$right = $elem+$this->lenConsensus;
+			$seqlen = strlen($this->seqs[$index]);
+			$left = max(0, $left- $this->radioPB);
+			$right = min($right + $this->radioPB, $seqlen);
+			$stringToAnalyze = substr($this->seqs[$index],$left, $right-$left);
+			$result [] = $stringToAnalyze;
+			$index = $index+1;
+		}
+		return $result;
+	}
 }
 ?>
