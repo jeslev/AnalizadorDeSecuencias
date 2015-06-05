@@ -10,10 +10,12 @@ class MotifsTree {
 	private $motifsFound = array();
 	private $distPercent;
 	private $txtpatr1="TTTW";//"GRCGHCVSWNTGTCTG";
-	
-	function __construct($num, $arraySeq){
+	private $allThePaths = array();
+
+	function __construct($num, $arraySeq,$d){
 		$this->numFam = $num;
 		$this->seqs = $arraySeq;
+		$this->distPercent = $d;
 		$this->findMotifs();
 	}
 
@@ -37,25 +39,41 @@ class MotifsTree {
 		return array($left, $right);
 	}
 
-	public function generateMotifsWays($d){
-		$this->distPercent = $d;
-		$result = array();
+	public function generateMotifsPaths(){
+		
 		foreach($this->motifsFound[0] as $motif){
-			$result[$motif] = array(); 
-			$result[$motif]=$this->recursiveBuilding($d, $motif, 1);			
+			$path = new SplQueue();
+			$path->push($motif);
+			$this->recursiveBuilding($this->distPercent, $motif, 1, $path);
 		}
-		return $result;
 	}
 
-	private function recursiveBuilding($d, $pos, $lvl){
-		$data =array();
-		if( $lvl>=$this->numFam) return $data;
+	private function recursiveBuilding($d, $pos, $lvl, $path){
+		
+		if( $lvl>=$this->numFam) {
+			$finalPath = array();
+
+			foreach ($path as $elem) {
+				$finalPath[] = $elem;
+			}
+			$this->allThePaths[] = $finalPath;
+			return ;
+		}
+
 		$params = $this->getBorders($pos,$d, $this->lens[$lvl]);
 		foreach($this->motifsFound[$lvl] as $motif){
-			if ( $motif > $params[0] && $motif < $params[1])
-				$data[$motif] = $this->recursiveBuilding($d,$motif,$lvl+1);
+			if ($motif > $params[0] && $motif < $params[1]){
+				$tmp_path = $path;
+				$tmp_path->push($motif);
+				$this->recursiveBuilding($d,$motif,$lvl+1, $tmp_path);
+				$tmp_path->pop();
+			}
 		}
-		return $data;
+		
+	}
+
+	public function getPaths(){
+		return $this->allThePaths;
 	}
 
 }
