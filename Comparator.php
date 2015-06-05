@@ -19,21 +19,21 @@ class Comparator {
 	private function doSearch(){ 
 		$sp = $this->pattern;
 		$replacements = array(
-					     "A"=>"A",
-					     "T"=>"T",
-					     "G"=>"G",
-					     "C"=>"C",
-						 "R"=>"[GA]",
-		                 "Y"=>"[TC]",
-		                 "K"=>"[GT]",
-                         "M"=>"[AC]",
-                         "S"=>"[GC]",
-                         "W"=>"[AT]",
-                         "B"=>"[GCT]",
-                         "D"=>"[AGT]",
-                         "H"=>"[ACT]",
-                         "V"=>"[ACG]",
-                         "N"=>"[AGTC]" );
+						"A"=>"A",
+						"T"=>"T",
+						"G"=>"G",
+						"C"=>"C",
+						"R"=>"[GA]",
+						"Y"=>"[TC]",
+						"K"=>"[GT]",
+						"M"=>"[AC]",
+						"S"=>"[GC]",
+						"W"=>"[AT]",
+						"B"=>"[GCT]",
+						"D"=>"[AGT]",
+						"H"=>"[ACT]",
+						"V"=>"[ACG]",
+						"N"=>"[AGTC]" );
 		$patronReg = "*";
 		$letters = str_split($sp);
 		foreach ($letters as $letter) {
@@ -47,10 +47,8 @@ class Comparator {
 	
 	public function getMatches(){
 		$res = array();
-		$long = strlen($this->text);
-		$long2 = strlen($this->pattern);
 		foreach ($this->result as $match) {
-			$res[] = $long-$match[1]+$long2;
+			$res[] = $match[1];
 		}
 		return $res;
 	}
