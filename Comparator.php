@@ -40,13 +40,21 @@ class Comparator {
 			$patronReg = $patronReg.$replacements[$letter];	
 		}
 		$patronReg = $patronReg."*";
-		preg_match_all($patronReg, $this->text, $matches, PREG_PATTERN_ORDER);
-		//echo $patronReg;
-		//var_dump($matches[0]);
-		$this->result = $matches;
+		preg_match_all($patronReg, $this->text, $matches, PREG_OFFSET_CAPTURE);
+		$this->result = $matches[0];
 
 	}
 	
+	public function getMatches(){
+		$res = array();
+		$long = strlen($this->text);
+		$long2 = strlen($this->pattern);
+		foreach ($this->result as $match) {
+			$res[] = $long-$match[1]+$long2;
+		}
+		return $res;
+	}
+
 	public function getSequence() {
 		return $this->text;
 	}
