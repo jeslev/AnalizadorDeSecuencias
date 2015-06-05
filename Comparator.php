@@ -47,10 +47,8 @@ class Comparator {
 	
 	public function getMatches(){
 		$res = array();
-		$long = strlen($this->text);
-		$long2 = strlen($this->pattern);
 		foreach ($this->result as $match) {
-			$res[] = $long-$match[1]+$long2;
+			$res[] = $match[1];
 		}
 		return $res;
 	}

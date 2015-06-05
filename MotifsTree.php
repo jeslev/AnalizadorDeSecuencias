@@ -36,8 +36,8 @@ class MotifsTree {
 	}
 
 
-	private function getBorders($pos, $d, $txtlen){
-		$len = ($pos*$d*1.0)/100.0;
+	private function getBorders($pos, $d, $txtlen, $prelen){
+		$len = ( ($prelen - $pos) *$d*1.0)/100.0;
 		$left = max($pos-$len, 0);
 		$right = min($pos+$len,$txtlen-1);
 		return array($left, $right);
@@ -64,7 +64,7 @@ class MotifsTree {
 			return ;
 		}
 
-		$params = $this->getBorders($pos,$d, $this->lens[$lvl]);
+		$params = $this->getBorders($pos,$d, $this->lens[$lvl],$this->lens[$lvl-1]);
 		foreach($this->motifsFound[$lvl] as $motif){
 			if ($motif > $params[0] && $motif < $params[1]){
 				$tmp_path = $path;
@@ -93,12 +93,12 @@ class MotifsTree {
 		$index = 0;
 		$result = array();
 		foreach ($path as $elem) {
-			$left = $elem-$this->lenConsensus;
-			$right = $elem;
+			$left = $elem;
+			$right = $elem+$this->lenConsensus;
 			$seqlen = strlen($this->seqs[$index]);
 			$left = max(0, $left- $this->radioPB);
 			$right = min($right + $this->radioPB, $seqlen);
-			$stringToAnalyze = substr($this->seqs[$index],$left, $right-$left+1);
+			$stringToAnalyze = substr($this->seqs[$index],$left, $right-$left);
 			$result [] = $stringToAnalyze;
 			$index = $index+1;
 		}
