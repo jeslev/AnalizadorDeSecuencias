@@ -3,6 +3,7 @@
 include("Comparator.php");
 error_reporting(E_ALL);
 
+//maneja las busquedas de 1 consensus en 1 array de secuencias
 class MotifsTree {
 	private $numFam;
 	private $seqs = array();
@@ -14,6 +15,14 @@ class MotifsTree {
 	private $lenConsensus;
 	private $radioPB;
 
+	/*
+	Constructor
+	 - numfam = Numero de familias(secuencias) a analizar
+	 - seq = Array de las secuencias
+	 - disPercent = Porcentaje de distancia para realizar combinaciones
+	 - radioPb = Radio de pares de bases para analizar
+	 - lenConsensus = Longitud de la secuencia consensus
+	*/
 	function __construct($num, $arraySeq,$d, $radioPB){
 		$this->numFam = $num;
 		$this->seqs = $arraySeq;
@@ -23,6 +32,11 @@ class MotifsTree {
 		$this->findMotifs();
 	}
 
+	/*
+	Para cada secuencia realiza la busqueda de coincidencias de consensus
+	como expresion regular.
+	- motifsFound = array de posiciones de todas las secuencias (array de arrays)
+	*/
 	private function findMotifs(){
 		foreach ($this->seqs as $seq) {
 			$this->lens[] = strlen($seq);
@@ -31,6 +45,7 @@ class MotifsTree {
 		}
 	}
 
+	/* Retorna array de posiciones de coincidencia */
 	public function getMotifs(){
 		return $this->motifsFound;
 	}
@@ -43,8 +58,11 @@ class MotifsTree {
 		return array($left, $right);
 	}
 
+	/*
+	Generamos todos los 'caminos'
+	Recorremos solo motifsFound[0] porque generamos combinaciones desde la primera familia (indice 0)
+	*/
 	public function generateMotifsPaths(){
-		
 		foreach($this->motifsFound[0] as $motif){
 			$path = new SplQueue();
 			$path->push($motif);
@@ -52,6 +70,10 @@ class MotifsTree {
 		}
 	}
 
+	/*
+	Funcion recursiva para generar todas las combinaciones
+	El resultado es almacenado en allThePaths
+	*/
 	private function recursiveBuilding($d, $pos, $lvl, $path){
 		
 		if( $lvl>=$this->numFam) {
@@ -79,7 +101,9 @@ class MotifsTree {
 	public function getPaths(){
 		return $this->allThePaths;
 	}
-
+	/*
+	Del array de combinaciones se generan los caminos en forma listada
+	*/
 	public function getStringPaths(){
 		$result = array();
 		foreach ($this->allThePaths as $path) {
@@ -89,6 +113,9 @@ class MotifsTree {
 
 	}
 
+	/*
+	Se itera el array de combinaciones para generar el listado de caminos
+	*/
 	private function getOnlyPath($path){
 		$index = 0;
 		$result = array();

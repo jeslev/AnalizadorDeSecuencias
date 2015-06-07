@@ -6,16 +6,26 @@ class Comparator {
 	private $text;
 	private $pattern;
 	private $result;
+
+	/*
+	Constructor
+	- text = Secuencia para analizar
+	- pattern = Consensus que se buscara
+	*/
 	function __construct($seq, $pattern){	
 		$this->text =$seq;
 		$this->pattern=$pattern;
 		$this->doSearch();	
 	}
 	
-	public function getPositions(){				
-		return 	$this->result[0];		
-	}	
-		
+	
+	/*
+	Busca las coincidencias de consensus,
+	por medio de expresiones regulares
+	$matches[0] = retorna valores de coincidencia al 100%
+	$matches[1] = retorna valores de coincidencia parcial (por parentesis)
+	result = guarda posiciones de las coincidencias encontradas
+	*/
 	private function doSearch(){ 
 		$sp = $this->pattern;
 		$replacements = array(
@@ -45,6 +55,11 @@ class Comparator {
 
 	}
 	
+	/*
+	Devuelve posiciones
+	$match[0] devuelve cadena
+	$match[1] devuelve posicion de cadena
+	*/
 	public function getMatches(){
 		$res = array();
 		foreach ($this->result as $match) {

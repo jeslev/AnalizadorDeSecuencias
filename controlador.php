@@ -27,15 +27,6 @@ echo "<br>Prueba de combinatorias<br>";
 $motifs->generateMotifsPaths();
 
 //Fase 3 y 4
-/*$paths = $motifs->getPaths();
-foreach ($paths as $path) {
-	echo "* ";
-	foreach ($path as $elem) {
-		echo $elem." ";
-	}
-	echo "<br>";
-}
-*/
 $seqsComb = $motifs->getStringPaths();
 foreach ($seqsComb as $sseq) {
 	foreach ($sseq as $seq) {
