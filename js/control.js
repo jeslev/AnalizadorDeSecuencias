@@ -4,7 +4,6 @@ $( document ).ready(function() {
 });
 
 function fn_listar_tabla(){
-	//var str = $("#frm_buscar").serialize();
 	$.ajax({
 		url: 'procs/controlador.php',
 		type: 'get',
@@ -31,8 +30,9 @@ function fn_listar_tabla(){
 }
 
 
-function fn_enviar(){    
-	var value=$("#inPatron").val(); 	
+function fn_enviar(){
+	$('#resultado').modal('show');
+    /*var value=$("#inPatron").val(); 	
 	//$('#frm_enviar').append("<input type=\"hidden\" id=\"inPatron\" name=\"inPatron\" value=".value."");	
     var str = $("#frm_enviar").serialize();    	
     console.log(str);
@@ -43,68 +43,6 @@ function fn_enviar(){
 		success: function(data){
 			$("#div_resultado").html(data);			
 		}
-	});
+	});*/
 
 };
-
-
-
-
-/*function fn_cerrar(){
-	$.unblockUI({ 
-		onUnblock: function(){
-			$("#div_oculto").html("");
-		}
-	}); 
-};
-/*
-function fn_mostrar_frm_agregar(){
-	$("#div_oculto").load("ajax_form_agregar.php", function(){
-		$.blockUI({
-			message: $('#div_oculto'),
-			css:{
-				top: '20%'
-			}
-		}); 
-	});
-};
-
-function fn_mostrar_frm_modificar(ide_per){
-	$("#div_oculto").load("ajax_form_modificar.php", {ide_per: ide_per}, function(){
-		$.blockUI({
-			message: $('#div_oculto'),
-			css:{
-				top: '20%'
-			}
-		}); 
-	});
-};
-
-/*function fn_paginar(var_div, url){
-	var div = $("#" + var_div);
-	$(div).load(url);
-	/*
-	div.fadeOut("fast", function(){
-		$(div).load(url, function(){
-			$(div).fadeIn("fast");
-		});
-	});
-	*/
-//}
-/*
-function fn_eliminar(ide_per){
-	var respuesta = confirm("Desea eliminar a esta persona?");
-	if (respuesta){
-		$.ajax({
-			url: 'ajax_eliminar.php',
-			data: 'ide_per=' + ide_per,
-			type: 'post',
-			success: function(data){
-				if(data!="")
-					alert(data);
-				fn_buscar()
-			}
-		});
-	}
-}
-*/

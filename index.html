@@ -60,16 +60,26 @@
 
     <div class="container">
       <!-- Resultados-->
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <h3> Resultado</h3>
-            <div id="div_resultado">
-
+      <div id="resultado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      		<div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Resultados</h4>
+              </div>
+              <div class="modal-body">
+                <p>Aqui se mostrará el como se desarrolla los resultados</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>            
           </div>
-        </div>
-      </div>  
-    </div>
 
+      	</div>
+      </div>  
+       
+    </div>
     <div class="container">
       <!-- Entrada -->
       <div class="panel panel-default">
@@ -113,7 +123,7 @@
                   <h3 class="panel-title">Parámetros</h3>
                 </div>
                 <div class="panel-body">
-                  <form role="form" action="#" id="frm_enviar" name="fmr_enviar">
+                  <form role="form" action="javascript:fn_enviar();" id="frm_enviar" name="fmr_enviar">
                     <div class="form-group">
                       <label>Distancia de búsqueda</label>
                       <input type="text" class="form-control" id="distancia"  name="distancia" placeholder="(%)">
@@ -124,7 +134,7 @@
                   </div> 
                   <div class="form-group">
                       <label></label>
-                      <button type="submit" class="btn btn-success" >Calcular</button>        
+                      <button type="submit" class="btn btn-success btn-large" >Calcular</button>       
                   </div> 
                   </form>
                 </div>
