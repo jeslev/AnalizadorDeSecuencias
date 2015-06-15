@@ -29,12 +29,13 @@ function fn_listar_tabla(){
 	
 }
 
-
 function fn_enviar(){
+	var motifPatron=$("#inPatron").val(); 	//recoge motif
+	var distanciaporc = $("#distancia").val(); //recoge distancia
+	var nropb = $("#nPares").val(); //recoge nro pares de base
 	$('#resultado').modal('show');
-    /*var value=$("#inPatron").val(); 	
-	//$('#frm_enviar').append("<input type=\"hidden\" id=\"inPatron\" name=\"inPatron\" value=".value."");	
-    var str = $("#frm_enviar").serialize();    	
+    
+	/*var str = $("#frm_enviar").serialize();    	
     console.log(str);
 	$.ajax({
 		url: 'php/controlador.php',
@@ -46,3 +47,4 @@ function fn_enviar(){
 	});*/
 
 };
+

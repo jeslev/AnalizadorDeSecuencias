@@ -101,10 +101,33 @@
                           <input type="text" class="form-control" id="lblSeq1" name="lblSeq1" placeholder="Secuencia">
                           <div style="position:relative;">
                             <a class='btn btn-primary' href='javascript:;'>Desde archivo
-                              <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+                              <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source1" id="file_source1" size="300" 
+                              onchange="
+                                $('#upload-file-info1').html($(this).val());
+                                var file = document.getElementById('file_source1');
+                                   if (!file) {
+                                      alert('No se encontró el archivo de entrada');
+                                    }
+                                    else if (!file.files) {
+                                      alert('El navegador no soporta la lectura de archivos. Por favor ingrese manualmente');
+                                    }
+                                    else if (!file.files[0]) {
+                                      alert('No ha escogido ningun archivo aun');               
+                                    }else{
+                                    input = file.files[0];
+                                  var reader = new FileReader();
+                                  reader.readAsText(input,'UTF-8');
+                                  reader.onload = function (evt) {
+                                    $('#lblSeq1').val(evt.target.result);
+                                  }
+                                  reader.onerror = function (evt) {
+                                    $('#lblSeq1').val('Error al leer el archivo');
+                                  }
+                                }
+                              ">
                             </a>
                             &nbsp;
-                            <span class='label label-info' id="upload-file-info"></span>
+                            <span class='label label-info' id="upload-file-info1"></span>
                           </div>                    
                     </div>
                   </div> <!--Final de elemento de secuencia-->
