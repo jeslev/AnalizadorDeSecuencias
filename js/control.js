@@ -10,7 +10,6 @@ function fn_listar_tabla(){
 		type: 'get',
         data: {action: 'listarMotifs'},
 		success: function(data){
-			alert(data);
 			$("#div_resultado_listar").html(data);			
 			$('#tabla_listar').dataTable();
 			$('#tabla_listar tbody').on( 'click', 'tr', function () {

@@ -26,14 +26,15 @@ function listarMotifs(){
 	        $num = count($data);
 	        $row++;
 	        $html.="<tr>";
-	        for ($c=0; $c < $num; $c++) {
+	        
+	        for ($c=0; $c < $num-1; $c++) {
 	            $html.="<td>".$data[$c] . "</td>\n";
 	        }
 	        $html.="</tr>\n";
 	    }
 	    $html." </tbody></table></div></div>";
-	    fclose($handle);
 	    echo $html;
+	    fclose($handle);
 	}
 	else{
 		echo "No se encontraron datos en el servidor";
