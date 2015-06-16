@@ -11,7 +11,7 @@ $(document).ready(
                 var texto = " <!--Elemento de 1 secuencia-->"+
                   "<div class=\"form-group\">"+
                    "<div class=\"col-xs-12\">"+
-                          "<select class=\"form-control\"><option selected value=\"-1\">Eliga ortologo</option>";
+                          "<select class=\"form-control\" id=\"selecSeq"+id+"\"><option selected value=\"-1\">Eliga ortologo</option>";
 
                 var ortologos = [
                                   "Drosophila simulans",
