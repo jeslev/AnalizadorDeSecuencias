@@ -1,4 +1,6 @@
-$(document).ready(function () {
+$(document).ready(
+  //agrega campos de secuencia al agregar familia
+  function () {
 
             $("#agregaFam").click(function () {
                 if( ($("#panelFam .form-group").length+1) > 12) {
@@ -9,7 +11,12 @@ $(document).ready(function () {
                 var texto = " <!--Elemento de 1 secuencia-->"+
                   "<div class=\"form-group\">"+
                    "<div class=\"col-xs-12\">"+
-                          "<label>Drosophila Melanogaster"+id+"</label>"+
+                          "<select class=\"form-control\"><option selected value=\"-1\">Escoga familia</option>";
+
+                for (var i = 2; i <= 12; i++) {
+                   texto = texto + "<option value=\""+i+"\">Ortologo "+i+"</option>";
+                };
+                texto = texto+"</select>"+
                           "<input type=\"text\" class=\"form-control\" id=\"lblSeq"+id+"\" name=\"lblSeq"+id+"\" placeholder=\"Secuencia\">"+
                           "<div style=\"position:relative;\">"+
                             "<a class='btn btn-primary' href='javascript:;'>Desde archivo"+
@@ -39,6 +46,7 @@ $(document).ready(function () {
             });
 
         });
+
 (function($) {
     $.fn.checkFileType = function(options) {
         var defaults = {
@@ -70,6 +78,8 @@ $(document).ready(function () {
 
 })(jQuery);
 
+//verifica .txt en los archivos de entrada
+//posible modificacion: es necesario que sea .txt?
 $(function() {
     $('#file_source1').checkFileType({
         allowedExtensions: ['txt'],
