@@ -33,7 +33,7 @@
     <?php
       //validar de nuevo
       if( isset($_POST['distancia']) ) {
-        echo $_POST['distancia'];
+        /*echo $_POST['distancia'];
         echo $_POST['nPares'];
         echo $_POST['optionType'];
         echo $_POST["inPatron"];
@@ -43,10 +43,12 @@
           $nm2= 'selecSeq'.$i;
           if(isset($_POST[$nm])) echo $_POST[$nm]."<br>";
           if(isset($_POST[$nm2])) echo $_POST[$nm2]."<br>";
-        }
+        }*/
       }
     ?>
-    <-- Navbar -->
+
+    <!-- Navbar -->
+
     <nav class="navbar navbar-inverse navbar-fixed-top" id="barraNav">
       <div class="container">
         <div class="navbar-header">
@@ -76,28 +78,9 @@
       </div>
     </div>
 
-    <div class="container">
-      <!-- Resultados-->
-      <div id="resultado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      		<div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Resultados</h4>
-              </div>
-              <div class="modal-body" id="resultadoContenido">
-                <p>Aqui se mostrará el como se desarrolla los resultados</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-              </div>
-            </div>            
-          </div>
 
-      	</div>
-      </div>  
-       
-    </div>
+
+
 
     <form role="form" action="index.php" method='post' onsubmit="return fn_enviar();" id="frm_enviar" name="frm_enviar">
 
@@ -154,11 +137,11 @@
                   </div> <!--Final de elemento de secuencia-->
 
                 </div>
-				          <div class="form-group">
+                  <div class="form-group">
                       <label></label>
                       <button type="button" class="btn btn-success" id="agregaFam">Agregar familia</button>      
                   </div> 
-              	</div>
+                </div>
 
             </div>
            <div class="col-xs-4">
@@ -201,6 +184,8 @@
       </div>
     </div>
 
+
+
     <div class="container">
       <!--Buscar en tabla de motifs-->
       <div class="panel panel-default">
@@ -222,16 +207,39 @@
     </div>
 
     </form>
- 	<div class="container">
- 		<footer class="footer">
- 			<p>&copy;INICTEL - UNI 2015</p>
- 		</footer>
- 	</div>   
+  
+    <?php if( isset($_POST['distancia'])) { //modal para mostrar datos de confirmacion, agregar boton de eliminar campo?>
+    <div class="container">
+      <div class="modal fade" id="modalResultados" name="modalResultados">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Resultados</h4>
+            </div>
+            <div class="modal-body">
+              <p>One fine body&hellip;</p>
+              <?php //include("procs/calcular.php");?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    </div>
+    <?php } ?>
+
+  <div class="container">
+    <footer class="footer">
+      <p>&copy;INICTEL - UNI 2015</p>
+    </footer>
+  </div>   
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-  	<!--Library form's-->
+    <!--Library form's-->
     <script src="js/funciones.js"></script>
     <script src="js/jquery.dataTables.min.js"></script>      
     <script src="js/dataTables.bootstrap.js"></script>      

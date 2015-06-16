@@ -1,3 +1,6 @@
+ $(window).load(function(){
+        $('#modalResultados').modal('show');
+   });
 
 $( document ).ready(function() {
     fn_listar_tabla();  
