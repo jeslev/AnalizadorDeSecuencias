@@ -28,6 +28,24 @@
   </style>
 
   <body>
+
+    <!--post-->
+    <?php
+      //validar de nuevo
+      if( isset($_POST['distancia']) ) {
+        echo $_POST['distancia'];
+        echo $_POST['nPares'];
+        echo $_POST['optionType'];
+        echo $_POST["inPatron"];
+        echo $_POST['lblSeq1'];
+        for($i=2;$i<=12;$i++){
+          $nm = 'lblSeq'.$i;
+          $nm2= 'selecSeq'.$i;
+          if(isset($_POST[$nm])) echo $_POST[$nm]."<br>";
+          if(isset($_POST[$nm2])) echo $_POST[$nm2]."<br>";
+        }
+      }
+    ?>
     <-- Navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top" id="barraNav">
       <div class="container">
@@ -67,7 +85,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title">Resultados</h4>
               </div>
-              <div class="modal-body">
+              <div class="modal-body" id="resultadoContenido">
                 <p>Aqui se mostrará el como se desarrolla los resultados</p>
               </div>
               <div class="modal-footer">
@@ -80,6 +98,9 @@
       </div>  
        
     </div>
+
+    <form role="form" action="index.php" method='post' onsubmit="return fn_enviar();" id="frm_enviar" name="frm_enviar">
+
     <div class="container">
       <!-- Entrada -->
       <div class="panel panel-default">
@@ -133,9 +154,9 @@
                   </div> <!--Final de elemento de secuencia-->
 
                 </div>
-				<div class="form-group">
+				          <div class="form-group">
                       <label></label>
-                      <button class="btn btn-success" id="agregaFam">Agregar familia</button>      
+                      <button type="button" class="btn btn-success" id="agregaFam">Agregar familia</button>      
                   </div> 
               	</div>
 
@@ -146,7 +167,7 @@
                   <h3 class="panel-title">Parámetros</h3>
                 </div>
                 <div class="panel-body">
-                  <form role="form" action="javascript:fn_enviar();" id="frm_enviar" name="frm_enviar">
+                  
                     <div class="form-group">
                       <label>Distancia de búsqueda</label>
                       <input type="text" class="form-control" id="distancia"  name="distancia" placeholder="(%)">
@@ -171,8 +192,7 @@
                   <div class="form-group">
                       <label></label>
                       <button type="submit" class="btn btn-success btn-large" >Calcular</button>       
-                  </div> 
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -188,7 +208,7 @@
           <div class="col-xs-4">
             <div class="form-group">
               <label><h3 class="text-center">Motif</h3></label>
-              <input type="text" class="form-control" id="inPatron" name="inPatron">
+              <input type="text" class="form-control" id="inPatron" name="inPatron" value="todos">
             </div>
           </div>
           <div class="form-group">
@@ -201,6 +221,7 @@
       </div>
     </div>
 
+    </form>
  	<div class="container">
  		<footer class="footer">
  			<p>&copy;INICTEL - UNI 2015</p>

@@ -69,17 +69,20 @@ function fn_enviar(){
 	};
 
 	//validar
-	if(!distanciaporc || !isNumber(distanciaporc) || distanciaporc<0 || distanciaporc>100) alert("Porcentaje de distancia no valido.");
-	else if(!nropb || !isNumber(nropb) || nropb<0) alert("Número de bases invalido.");
-	else {
+	if(!distanciaporc || !isNumber(distanciaporc) || distanciaporc<0 || distanciaporc>100) {
+		alert("Porcentaje de distancia no valido.");
+		return false;
+	}
+	else if(!nropb || !isNumber(nropb) || nropb<0) {
+		alert("Número de bases invalido.");
+		return false;
+	}else {
 		var res = 1;
 		res = checkStr(seqsFam[0]);
 		if(res==0){
 				alert("Secuencia #1 no es valida.");
 				return false;
 		}
-		var checkedTipo = [0];
-		var checkedFam = [seqsFam[0]];
 		for (var i = 1; i< seqsFam.length; i++) {
 			if( tipoFam[i]==-1){
 				alert("No se especifico ortólogo para familia #"+(i+1));
@@ -90,25 +93,27 @@ function fn_enviar(){
 				alert("Secuencia #"+(i+1)+" no es valida.");
 				return false;
 			}
-			checkedTipo.push(tipoFam[i]);
-			checkedFam.push(seqsFam[i]);
 		};
 		//si datos son validos
 		if(res==1){
-		
-			$('#resultado').modal('show');
+			/*$.ajax({
+				url: 'procs/controlador.php',
+				type: 'GET',
+				data: 'action=calcular&val=3',
+				success: function(data){
+					$("#resultadoContenido").html(data);			
+				},
+				error: function(xhr, status,errorThrown ) {
+					alert( "Problema al conectar servidor" );
+					console.log( "Error: " + errorThrown );
+					console.log( "Status: " + status );
+					console.dir( xhr );	
+				}
+			});
+			$('#resultado').modal('show');*/
 		}
 	}
-	/*var str = $("#frm_enviar").serialize();    	
-    console.log(str);
-	$.ajax({
-		url: 'php/controlador.php',
-		type: 'GET',
-		data: str+'&inPatron='+value,
-		success: function(data){
-			$("#div_resultado").html(data);			
-		}
-	});*/
+
 
 };
 
