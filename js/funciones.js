@@ -11,10 +11,22 @@ $(document).ready(
                 var texto = " <!--Elemento de 1 secuencia-->"+
                   "<div class=\"form-group\">"+
                    "<div class=\"col-xs-12\">"+
-                          "<select class=\"form-control\"><option selected value=\"-1\">Escoga familia</option>";
+                          "<select class=\"form-control\"><option selected value=\"-1\">Eliga ortologo</option>";
 
+                var ortologos = [
+                                  "Drosophila simulans",
+                                  "Drosophila sechellia",
+                                  "Drosophila erecta",
+                                  "Drosophila yakuba",
+                                  "Drosophila ananassae",
+                                  "Drosophila pseudoobscura pseudoobscura",
+                                  "Drosophila persimilis",
+                                  "Drosophila willistoni",
+                                  "Drosophila virilis",
+                                  "Drosophila mojavensis",
+                                  "Drosophila grimshawi"];
                 for (var i = 2; i <= 12; i++) {
-                   texto = texto + "<option value=\""+i+"\">Ortologo "+i+"</option>";
+                   texto = texto + "<option value=\""+(i-1)+"\">"+ortologos[i-2]+"</option>";
                 };
                 texto = texto+"</select>"+
                           "<input type=\"text\" class=\"form-control\" id=\"lblSeq"+id+"\" name=\"lblSeq"+id+"\" placeholder=\"Secuencia\">"+
@@ -47,7 +59,7 @@ $(document).ready(
 
         });
 
-(function($) {
+/*j(function($) {
     $.fn.checkFileType = function(options) {
         var defaults = {
             allowedExtensions: [],
@@ -91,4 +103,4 @@ $(function() {
         }
     });
 
-});
+});*/
