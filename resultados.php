@@ -62,6 +62,9 @@
 
 
     <div class="container">
+      <?php var_dump($_POST); ?>
+      <br>
+      <?php echo $_POST['distancia']?>
       <p>
       <?php include('procs/calcular.php');?>
       </p>

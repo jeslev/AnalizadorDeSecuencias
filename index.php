@@ -210,27 +210,32 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title">Verifique los datos:</h4>
             </div>
-            <form role="form" action="procs/calcular.php" method='post' id="frm_calcular" name="frm_calcular">
+            <form role="form" action="resultados.php" method='post' id="frm_calcular" name="frm_calcular">
             <div class="modal-body">
             	<div class="form-group">
             		<label class="control-label">Distancia (%):</label>
-            		<input type="text" class="form-control" value="<?php echo $_POST['distancia'];?>" name='distancia' id='distancia' disabled>
+                <label class="control-label"><?php echo $_POST['distancia'];?></label>
+            		<input type="hidden" class="form-control" value="<?php echo $_POST['distancia'];?>" name='distancia' id='distancia'>
             	</div>
             	<div class="form-group">
             		<label class="control-label">Radio de pares de base:</label>
-            		<input type="text" class="form-control" value="<?php echo $_POST['nPares'];?>" name='nPares' id='nPares' disabled>
+                <label class="control-label"><?php echo $_POST['nPares'];?></label>
+            		<input type="hidden" class="form-control" value="<?php echo $_POST['nPares'];?>" name='nPares' id='nPares'>
             	</div>
             	<div class="form-group">
             		<label class="control-label">Tipo de analisis:</label>
-            		<input type="text" class="form-control" value="<?php if(strcmp($_POST['optionType'],'zonapromotora')==0) echo 'Zona Promotora'; else echo 'Primer Intron';?>" name='optionType' id='optionType' disabled>
+                <label class="control-label"><?php if(strcmp($_POST['optionType'],'zonapromotora')==0) echo 'Zona Promotora'; else echo 'Primer Intron';?></label>
+            		<input type="hidden" class="form-control" value="<?php echo $_POST['optionType'];?>" name='optionType' id='optionType'>
             	</div>
             	<div class="form-group">
             		<label class="control-label">Motif escogido:</label>
-            		<input type="text" class="form-control" value="<?php echo $_POST['inPatron'];?>" name='motif' id='motif' disabled>
+                <label class="control-label"><?php echo $_POST['inPatron'];?></label>
+            		<input type="hidden" class="form-control" value="<?php echo $_POST['inPatron'];?>" name='motif' id='motif'>
             	</div>
             	<div class="form-group">
             		<label class="control-label">Drosophila Melanogaster:</label>
-            		<input type="text" class="form-control" value="<?php echo $_POST['lblSeq1'];?>" name='lblSeq1' id='lblSeq1' disabled>
+                <label class="control-label"><?php echo $_POST['lblSeq1'];?></label>
+            		<input type="hidden" class="form-control" value="<?php echo $_POST['lblSeq1'];?>" name='lblSeq1' id='lblSeq1'>
             	</div>
               <?php
 
@@ -255,8 +260,9 @@
                   ?>
               <div class="form-group">
                 <label class="control-label"><?php echo $ortologos[$nm2val-1];?></label>
+                <label class="control-label"><?php echo $_POST[$nm];?></label>
                 <input type="hidden" class="form-control" value="<?php echo $_POST[$nm2];?>" name="<?php echo $nm2; ?>" id="<?php echo $nm2;?>" >
-                <input type="text" class="form-control" value="<?php echo $_POST[$nm];?>" name='<?php echo $nm;?>' id='<?php echo $nm;?>' disabled>
+                <input type="hidden" class="form-control" value="<?php echo $_POST[$nm];?>" name='<?php echo $nm;?>' id='<?php echo $nm;?>'>
               </div> 
                   <?php
                 }}
