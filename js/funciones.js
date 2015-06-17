@@ -57,6 +57,15 @@ $(document).ready(
                 $('#panelFam').append(texto);
             });
 
+            $("#borrarFam").click(function () {
+                if ($('#panelFam .form-group').length == 1) {
+                    alert("No pueden eliminarse mas familias");
+                    return false;
+                }
+
+                $("#panelFam .form-group:last").remove();
+            });
+
         });
 
 /*j(function($) {

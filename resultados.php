@@ -29,24 +29,6 @@
 
   <body>
 
-    <!--post-->
-    <?php
-      //validar de nuevo
-      if( isset($_POST['distancia']) ) {
-        /*echo $_POST['distancia'];
-        echo $_POST['nPares'];
-        echo $_POST['optionType'];
-        echo $_POST["inPatron"];
-        echo $_POST['lblSeq1'];
-        for($i=2;$i<=12;$i++){
-          $nm = 'lblSeq'.$i;
-          $nm2= 'selecSeq'.$i;
-          if(isset($_POST[$nm])) echo $_POST[$nm]."<br>";
-          if(isset($_POST[$nm2])) echo $_POST[$nm2]."<br>";
-        }*/
-      }
-    ?>
-
     <!-- Navbar -->
 
     <nav class="navbar navbar-inverse navbar-fixed-top" id="barraNav">

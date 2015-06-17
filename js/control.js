@@ -37,8 +37,8 @@ function checkStr(seq){
 	if(seq.length==0) res=0;
 	for(var x=0; x<seq.length;x++){
 		if(seq[x]=='C' || seq[x]=='T' || seq[x]=='G' || seq[x]=='A' ||
-			seq[x]=='c' || seq[x]=='t' || seq[x]=='g' || seq[x]=='a') res=1;
-		else res = 0;
+			seq[x]=='c' || seq[x]=='t' || seq[x]=='g' || seq[x]=='a') ;
+		else return 0;
 	}
 	return res;
 };

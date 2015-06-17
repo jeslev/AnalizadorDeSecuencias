@@ -29,24 +29,6 @@
 
   <body>
 
-    <!--post-->
-    <?php
-      //validar de nuevo
-      if( isset($_POST['distancia']) ) {
-        /*echo $_POST['distancia'];
-        echo $_POST['nPares'];
-        echo $_POST['optionType'];
-        echo $_POST["inPatron"];
-        echo $_POST['lblSeq1'];
-        for($i=2;$i<=12;$i++){
-          $nm = 'lblSeq'.$i;
-          $nm2= 'selecSeq'.$i;
-          if(isset($_POST[$nm])) echo $_POST[$nm]."<br>";
-          if(isset($_POST[$nm2])) echo $_POST[$nm2]."<br>";
-        }*/
-      }
-    ?>
-
     <!-- Navbar -->
 
     <nav class="navbar navbar-inverse navbar-fixed-top" id="barraNav">
@@ -139,7 +121,8 @@
                 </div>
                   <div class="form-group">
                       <label></label>
-                      <button type="button" class="btn btn-success" id="agregaFam">Agregar familia</button>      
+                      <button type="button" class="btn btn-success" id="agregaFam">Agregar familia</button> 
+                      <button type="button" class="btn btn-warning" id="borrarFam">Remover</button>      
                   </div> 
                 </div>
 
@@ -209,21 +192,81 @@
     </form>
   
     <?php if( isset($_POST['distancia'])) { //modal para mostrar datos de confirmacion, agregar boton de eliminar campo?>
+        <!--post-->
+        <?php /*
+        echo $_POST['lblSeq1'];
+        for($i=2;$i<=12;$i++){
+          $nm = 'lblSeq'.$i;
+          $nm2= 'selecSeq'.$i;
+          if(isset($_POST[$nm])) echo $_POST[$nm]."<br>";
+          if(isset($_POST[$nm2])) echo $_POST[$nm2]."<br>";
+        }*/ ?>
+      
     <div class="container">
       <div class="modal fade" id="modalResultados" name="modalResultados">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Resultados</h4>
+              <h4 class="modal-title">Verifique los datos:</h4>
             </div>
+            <form role="form" action="procs/calcular.php" method='post' id="frm_calcular" name="frm_calcular">
             <div class="modal-body">
-              <p>One fine body&hellip;</p>
-              <?php //include("procs/calcular.php");?>
+            	<div class="form-group">
+            		<label class="control-label">Distancia (%):</label>
+            		<input type="text" class="form-control" value="<?php echo $_POST['distancia'];?>" name='distancia' id='distancia' disabled>
+            	</div>
+            	<div class="form-group">
+            		<label class="control-label">Radio de pares de base:</label>
+            		<input type="text" class="form-control" value="<?php echo $_POST['nPares'];?>" name='nPares' id='nPares' disabled>
+            	</div>
+            	<div class="form-group">
+            		<label class="control-label">Tipo de analisis:</label>
+            		<input type="text" class="form-control" value="<?php if(strcmp($_POST['optionType'],'zonapromotora')==0) echo 'Zona Promotora'; else echo 'Primer Intron';?>" name='optionType' id='optionType' disabled>
+            	</div>
+            	<div class="form-group">
+            		<label class="control-label">Motif escogido:</label>
+            		<input type="text" class="form-control" value="<?php echo $_POST['inPatron'];?>" name='motif' id='motif' disabled>
+            	</div>
+            	<div class="form-group">
+            		<label class="control-label">Drosophila Melanogaster:</label>
+            		<input type="text" class="form-control" value="<?php echo $_POST['lblSeq1'];?>" name='lblSeq1' id='lblSeq1' disabled>
+            	</div>
+              <?php
+
+                $ortologos = array(
+                                  "Drosophila simulans",
+                                  "Drosophila sechellia",
+                                  "Drosophila erecta",
+                                  "Drosophila yakuba",
+                                  "Drosophila ananassae",
+                                  "Drosophila pseudoobscura pseudoobscura",
+                                  "Drosophila persimilis",
+                                  "Drosophila willistoni",
+                                  "Drosophila virilis",
+                                  "Drosophila mojavensis",
+                                  "Drosophila grimshawi");
+                for($i=2;$i<12;$i++){
+
+                   $nm = 'lblSeq'.$i;
+                   $nm2= 'selecSeq'.$i;
+                   if( isset($_POST[$nm]) ) {
+                   $nm2val = $_POST[$nm2];
+                  ?>
+              <div class="form-group">
+                <label class="control-label"><?php echo $ortologos[$nm2val-1];?></label>
+                <input type="hidden" class="form-control" value="<?php echo $_POST[$nm2];?>" name="<?php echo $nm2; ?>" id="<?php echo $nm2;?>" >
+                <input type="text" class="form-control" value="<?php echo $_POST[$nm];?>" name='<?php echo $nm;?>' id='<?php echo $nm;?>' disabled>
+              </div> 
+                  <?php
+                }}
+              ?>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-success btn-large" >Confirmar</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
+            </form>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
