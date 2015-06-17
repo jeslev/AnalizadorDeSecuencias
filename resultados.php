@@ -41,11 +41,11 @@
             <span class="icon-bar"></span>
           </button>
 
-          <a href="#" class="navbar-brand">INICTEL-UNI / Biología Computacional</a>
+          <a href="index.php" class="navbar-brand">INICTEL-UNI / Biología Computacional</a>
         </div>
           <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Laboratorio Microgravedad</a></li>
+              <li><a href="index.php">Laboratorio Microgravedad</a></li>
             </ul>
           
           </div>
@@ -62,11 +62,46 @@
 
 
     <div class="container">
-      <?php var_dump($_POST); ?>
+      <?php var_dump($_POST); 
+        $ortologos = array(
+                                  "Drosophila simulans",
+                                  "Drosophila sechellia",
+                                  "Drosophila erecta",
+                                  "Drosophila yakuba",
+                                  "Drosophila ananassae",
+                                  "Drosophila pseudoobscura pseudoobscura",
+                                  "Drosophila persimilis",
+                                  "Drosophila willistoni",
+                                  "Drosophila virilis",
+                                  "Drosophila mojavensis",
+                                  "Drosophila grimshawi");
+        $tot = 0;
+        for($i=2;$i<=12;$i++){
+          if( isset($_POST['lblSeq'.$i]) )  $tot=$tot+1;          
+        }
+      ?>
       <br>
       <?php echo $_POST['distancia']?>
-      <p>
+      
+      <div class="table-responsive" style="overflow:auto;">
+        <table class="table table-stripped table-bordered">
+          <thead><tr>
+            <th>Código Motif</th>
+            <th>Nombre Motif</th>
+            <th>Secuencia Motif</th>
+            <th>Drosophila Melanogaster</th>
+            <?php for($i=2;$i<$tot+2;$i++){ ?>
+            <th><?php echo $ortologos[$_POST['selecSeq'.($i)]-1];?></th>
+            <?php } ?>
+            <th></th>
+          </tr></thead>
       <?php include('procs/calcular.php');?>
+
+        </table>
+      </div>
+
+
+      <p>
       </p>
     </div>
 
