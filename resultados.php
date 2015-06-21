@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php 
+include("DatosMotif.php");
+include("procs/MotifsTree.php");
+?>
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -54,7 +59,7 @@
 
     <!--jumbotron-->
     <div class="jumbotron">
-      <div class="container text-center">
+      <div class    ="container text-center">
         <h2>Realizando consulta</h2>
         <p> Por favor espere mientras se procesa su consulta.</p>
       </div>
@@ -76,13 +81,27 @@
                                   "Drosophila mojavensis",
                                   "Drosophila grimshawi");
         $tot = 0;
-        for($i=2;$i<=12;$i++){
-          if( isset($_POST['lblSeq'.$i]) )  $tot=$tot+1;          
-        }
+        $posSeq = array();
+        //$posSeqNombre = array();
+        for($i=2;$i<=12;$i++)
+          if( isset($_POST['lblSeq'.$i]) ){
+            $tot=$tot+1;
+            $posSeq[] = $i;
+          }          
       ?>
       <br>
       <?php echo $_POST['distancia']?>
       
+      <?php 
+        $obtenerMotifs = new DatosMotif($_POST['motif']);
+        $listaMotif = $obtenerMotifs->obtenerResultados();
+        //echo var_dump($listaMotif);
+        $secuencias = array();
+        $secuencias[] = $_POST['lblSeq1'];
+        for($i=0;$i<$tot;$i++){
+            $secuencias[] = $_POST['lblSeq'.$posSeq[$i]];
+        }
+      ?>
       <div class="table-responsive" style="overflow:auto;">
         <table class="table table-stripped table-bordered">
           <thead><tr>
@@ -90,11 +109,49 @@
             <th>Nombre Motif</th>
             <th>Secuencia Motif</th>
             <th>Drosophila Melanogaster</th>
-            <?php for($i=2;$i<$tot+2;$i++){ ?>
-            <th><?php echo $ortologos[$_POST['selecSeq'.($i)]-1];?></th>
+            <?php for($i=0;$i<$tot;$i++){ ?>
+            <th><?php echo $ortologos[$_POST['selecSeq'.($posSeq[$i])]-1]; ?></th>
             <?php } ?>
             <th></th>
-          </tr></thead>
+          </tr>
+          <?php 
+            
+            foreach($listaMotif as $detalleMotif){
+              $motifTree = new MotifsTree($detalleMotif[2],count($secuencias),$secuencias,intval($_POST['distancia']),intval($_POST['nPares']));
+              $motifTree->generateMotifsPaths();
+              $motifTree->getMotifs();
+              $stringAcep = $motifTree->getStringMeans();
+              //echo $stringAcep.'sdfsadf<br>';
+              if(strlen($stringAcep)>0){              
+          ?>
+          <tr>
+            <th><?php echo $detalleMotif[0] ?></th>
+            <th><?php echo $detalleMotif[1] ?></th>
+            <th><?php echo $detalleMotif[2] ?></th>
+            <th><?php echo $_POST['lblSeq1']; ?></th>
+            <?php for($i=0;$i<$tot;$i++){ ?>
+            <th><?php echo $_POST['lblSeq'.$posSeq[$i]]; ?></th>
+            <?php } ?>
+            <th>
+                <form action="grafica-secuencia.php" method="post"><!--<input type="submit" value="Graficar">-->
+                <input type="hidden" class="form-control" value="<?php echo $_POST['distancia'];?>" name='distancia' id='distancia'>
+                <input type="hidden" class="form-control" value="<?php echo $_POST['nPares'];?>" name='radioPB' id='radioPB'>
+                <input type="hidden" class="form-control" value="<?php echo $detalleMotif[2];?>" name='motif' id='motif'>
+                <input type="hidden" class="form-control" value="<?php echo $_POST['lblSeq1'];?>" name='lblSeq1' id='lblSeq1'>
+                <?php for($j=0;$j<$tot;$j++){ ?>
+                <input type="hidden" class="form-control" value="<?php echo $_POST['lblSeq'.$posSeq[$j]];?>" name="<?php echo 'lblSeq'.$posSeq[$j]; ?>" id="<?php echo 'lblSeq'.$posSeq[$j]; ?>" >
+                <input type="hidden" class="form-control" value="<?php echo $ortologos[$_POST['selecSeq'.($posSeq[$j])]-1];?>" name="<?php echo 'selecSeq'.$posSeq[$j]; ?>" id="<?php echo 'selecSeq'.$posSeq[$j];?>">
+               <?php
+                    }               ?>
+                <center><button type="submit" class="btn btn-success btn-large">Graficar</button><center>
+                </form>
+            </th>
+          </tr>
+          <?php 
+            } 
+          }
+          ?>
+          </thead>
       <?php include('procs/calcular.php');?>
 
         </table>
