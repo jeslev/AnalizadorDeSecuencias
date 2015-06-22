@@ -24,7 +24,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                     $secuencia[] = $_POST['lblSeq'.$i];
                 }
             }          
-
+            //echo 'motif: '.$motif.'<br>';
+            //echo 'distancia: '.$distancia.'<br>';
+            //echo 'radioPB: '.$radioPB.'<br>';
+            //echo 'longitud: '.count($secuencia).'<br>';
+            //echo 'secuencia: '; foreach($secuencia as $s) echo $s.'<br>'; echo '<br>';
 	//Fase 1
             $motifs = new MotifsTree($motif,count($secuencia),$secuencia,$distancia,$radioPB);
             $motifs->generateMotifsPaths();

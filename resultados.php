@@ -113,28 +113,36 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             <?php for($i=0;$i<$tot;$i++){ ?>
             <th><?php echo $ortologos[$_POST['selecSeq'.($posSeq[$i])]-1]; ?></th>
             <?php } ?>
-            <th></th>
+            <th>Opciones</th>
           </tr>
           </thead>
 
           <tbody>
           <?php 
-            
+            $cantFilas = 0;
             foreach($listaMotif as $detalleMotif){
               $motifTree = new MotifsTree($detalleMotif[2],count($secuencias),$secuencias,intval($_POST['distancia']),intval($_POST['nPares']));
               $motifTree->generateMotifsPaths();
               $motifTree->getMotifs();
               $stringAcep = $motifTree->getStringMeans();
               //echo $stringAcep.'sdfsadf<br>';
-              if(strlen($stringAcep)>0){              
+              if(strlen($stringAcep)>0){ 
+                    $cantFilas++;             
           ?>
           <tr>
             <th><?php echo $detalleMotif[0] ?></th>
             <th><?php echo $detalleMotif[1] ?></th>
             <th><?php echo $detalleMotif[2] ?></th>
-            <th><?php echo $_POST['lblSeq1']; ?></th>
-            <?php for($i=0;$i<$tot;$i++){ ?>
-            <th><?php echo $_POST['lblSeq'.$posSeq[$i]]; ?></th>
+           <!-- <th><?php echo $_POST['lblSeq1']; ?></th> -->
+            <?php 
+                $posiciones = $motifTree->getColaPosiciones();
+                //for($i=0;$i<$tot;$i++){ 
+                foreach($posiciones as $posicionesMotif){
+            ?>
+            <th><?php //echo $_POST['lblSeq'.$posSeq[$i]]; 
+                    echo $posicionesMotif;
+                ?>
+            </th>
             <?php } ?>
             <th>
                 <form action="grafica-secuencia.php" method="post"><!--<input type="submit" value="Graficar">-->
@@ -158,6 +166,15 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
           </tbody>
 
         </table>
+        
+        <?php
+            if($cantFilas == 0){
+        ?>   
+        <h2><center>No se encontraron coincidencias</center><h2/> 
+        <?php    
+            }
+        ?>
+        
       </div>
 
 

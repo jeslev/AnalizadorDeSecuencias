@@ -10,7 +10,7 @@ class MotifsTree {
 	private $lens = array();
 	private $motifsFound = array();
 	private $distPercent;
-	private $txtpatr1=  "NNNNNNATTANYNNNN" ;//"TTTW";//"GRCGHCVSWNTGTCTG";
+	private $txtpatr1;//  "NNNNNNATTANYNNNN" ;//"TTTW";//"GRCGHCVSWNTGTCTG";
 	private $allThePaths = array();
 	private $lenConsensus;
 	private $radioPB;
@@ -20,6 +20,7 @@ class MotifsTree {
 	private $normalYValues = array();
     private $mejorMean;
 	private	$mejorDesviacion;
+	private $colaPosiciones = array();
 
 	/*Constructor
 	     - numfam = Numero de familias(secuencias) a analizar
@@ -96,6 +97,8 @@ class MotifsTree {
 			
 			$this->contATGC($result, $this->radioPB+$this->lenConsensus, 2*$this->radioPB+$this->lenConsensus, $maxY);
 			
+			//echo var_dump($maxY);
+			
 			$XValuesNormal = array();
 			$XValues = array();
 			
@@ -117,8 +120,11 @@ class MotifsTree {
 			    $this->mejorR = $actualR;
 			    $this->normalYValues = $this->calcularNormalValues($XValuesNormal, $mean, $desviationEstandar); 
 			    $this->mejorMaxY = $maxY;
+                $this->colaPosiciones = array();
+			    foreach($finalPath as $posicion){
+			        $this->colaPosiciones[] = $posicion;
+			    }
 			}
-
 			return;
 		}
 
@@ -142,6 +148,7 @@ class MotifsTree {
 				if($element[$i]=='G') $contG++;
 				if($element[$i]=='C') $contC++;
 			}
+			//echo $contA.' '.$contT.' '.$contG.' '.$contC.' '.'<br>';
 			$maxY[] = max(max($contA, $contT),max($contG, $contC))/($contA+$contT+$contG+$contC);				
 		}
 	} 
@@ -192,6 +199,9 @@ class MotifsTree {
 
 	public function getPaths(){
 		return $this->allThePaths;
+	}
+	public function getColaPosiciones(){
+    	return $this->colaPosiciones;
 	}
 	
 	/*	Del array de combinaciones se generan los caminos en forma listada */
