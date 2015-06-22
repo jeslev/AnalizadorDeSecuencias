@@ -2,6 +2,8 @@
 <?php 
 include("procs/DatosMotif.php");
 include("procs/MotifsTree.php");
+
+if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 ?>
 
 <html lang="en">
@@ -180,3 +182,11 @@ include("procs/MotifsTree.php");
 
   </body>
 </html>
+<?php
+}
+else{
+    echo "Ooops! Parece que te metiste a otro lado<br>";
+    echo "Te llevaremos ahi, no te preocupes :)<br>";
+    header("refresh:5;url=index.php");
+} 
+?>
