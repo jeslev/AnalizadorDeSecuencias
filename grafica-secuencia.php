@@ -175,10 +175,57 @@ $(function () {
             <div class="panel-heading"><h4><b>Gráfica de conservación para el motif</b></h4></div>
                 <div class="panel-body" id="grafica">
 
-
-
                 </div>        
-        </div>    
+        </div>
+        
+        
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4><b>Secuencias de Motif</b></h4></div>
+                <div class="panel-body">
+                
+                <canvas id='myCanvas' width='20000' height="<?php echo count($secuencia)*105; ?>"></canvas>
+                <?php
+                    echo"
+                    <script>
+                      var canvas = document.getElementById('myCanvas');
+                      var context = canvas.getContext('2d');
+                    ";
+                ?>
+                
+                <?php 
+                    $posY = array();
+                    for($k=0;$k<count($secuencia);$k++) $posY[] = 50+100*$k;
+                    $posX = $motifs->getColaPosiciones(); 
+                    for($i=0;$i<count($secuencia);$i++){ 
+                    
+                        //echo '<b>'.$nombresSeq[$i].'</b><br><br>';                
+                        $iniX = 150;
+                        $finX = $iniX+strlen($secuencia[$i]);
+                        $inifinY = $posY[$i];
+                        $postextoY = $posY[$i]-10;
+                        echo
+                        //" context.beginPath();
+                         " 
+                          context.strokeStyle = '#444040';
+                          context.fillText('".$nombresSeq[$i]."',10,".$postextoY.");
+                          context.moveTo(".$iniX.", ".$inifinY.");
+                          context.lineTo(".$finX.", ".$inifinY.");
+                          context.lineWidth = 4;
+                          ";
+                          
+                            if($i>0){
+                            echo   "
+                                    context.moveTo(".$iniX.", ".$inifinY.");
+                                    context.lineTo(".$finX.", ".$inifinY.");
+                                    ";      
+                         }
+                          
+                    }
+                    echo "context.stroke(); </script>";   
+                ?>
+                </div>        
+        </div>
+            
     </div>
  
 	</body>
