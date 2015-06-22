@@ -180,7 +180,7 @@ $(function () {
         
         
         <div class="panel panel-default">
-            <div class="panel-heading"><h4><b>Secuencias de Motif</b></h4></div>
+            <div class="panel-heading"><h4><b>Desplazamiento del motif</b></h4></div>
                 <div class="panel-body">
                 
                 <canvas id='myCanvas' width='20000' height="<?php echo count($secuencia)*105; ?>"></canvas>
@@ -193,9 +193,11 @@ $(function () {
                 ?>
                 
                 <?php 
+                    $colorsCanvas = array("#ff0000","#00ff00","#0000ff","#ff00ff","#ffff00","#00ffff","#55bb55","#5555bb","#bb5555","#bbccdd","#ddccbb","#ccddbb");
                     $posY = array();
                     for($k=0;$k<count($secuencia);$k++) $posY[] = 50+100*$k;
                     $posX = $motifs->getColaPosiciones(); 
+                    //echo var_dump($posX);
                     for($i=0;$i<count($secuencia);$i++){ 
                     
                         //echo '<b>'.$nombresSeq[$i].'</b><br><br>';                
@@ -204,23 +206,28 @@ $(function () {
                         $inifinY = $posY[$i];
                         $postextoY = $posY[$i]-10;
                         echo
-                        //" context.beginPath();
                          " 
+                          context.beginPath();
                           context.strokeStyle = '#444040';
                           context.fillText('".$nombresSeq[$i]."',10,".$postextoY.");
                           context.moveTo(".$iniX.", ".$inifinY.");
                           context.lineTo(".$finX.", ".$inifinY.");
                           context.lineWidth = 4;
+                          context.stroke();
                           ";
                           
                             if($i>0){
                             echo   "
-                                    context.moveTo(".$iniX.", ".$inifinY.");
-                                    context.lineTo(".$finX.", ".$inifinY.");
+                                    context.beginPath();
+                                    context.strokeStyle='".$colorsCanvas[$i-1]."';
+                                    context.moveTo(".($posX[$i-1]+150).", ".$posY[$i-1].");
+                                    context.lineTo(".($posX[$i]+150).", ".$posY[$i].");
+                                    context.stroke();
                                     ";      
                          }
                           
                     }
+
                     echo "context.stroke(); </script>";   
                 ?>
                 </div>        
