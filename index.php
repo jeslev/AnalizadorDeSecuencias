@@ -193,14 +193,6 @@
   
     <?php if( isset($_POST['distancia'])) { //modal para mostrar datos de confirmacion, agregar boton de eliminar campo?>
         <!--post-->
-        <?php /*
-        echo $_POST['lblSeq1'];
-        for($i=2;$i<=12;$i++){
-          $nm = 'lblSeq'.$i;
-          $nm2= 'selecSeq'.$i;
-          if(isset($_POST[$nm])) echo $_POST[$nm]."<br>";
-          if(isset($_POST[$nm2])) echo $_POST[$nm2]."<br>";
-        }*/ ?>
       
     <div class="container">
       <div class="modal fade" id="modalResultados" name="modalResultados">

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php 
-include("DatosMotif.php");
+include("procs/DatosMotif.php");
 include("procs/MotifsTree.php");
 ?>
 
@@ -67,7 +67,7 @@ include("procs/MotifsTree.php");
 
 
     <div class="container">
-      <?php var_dump($_POST); 
+      <?php 
         $ortologos = array(
                                   "Drosophila simulans",
                                   "Drosophila sechellia",
@@ -90,7 +90,6 @@ include("procs/MotifsTree.php");
           }          
       ?>
       <br>
-      <?php echo $_POST['distancia']?>
       
       <?php 
         $obtenerMotifs = new DatosMotif($_POST['motif']);
@@ -114,6 +113,9 @@ include("procs/MotifsTree.php");
             <?php } ?>
             <th></th>
           </tr>
+          </thead>
+
+          <tbody>
           <?php 
             
             foreach($listaMotif as $detalleMotif){
@@ -151,8 +153,7 @@ include("procs/MotifsTree.php");
             } 
           }
           ?>
-          </thead>
-      <?php include('procs/calcular.php');?>
+          </tbody>
 
         </table>
       </div>
