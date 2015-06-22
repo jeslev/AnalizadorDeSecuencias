@@ -121,7 +121,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
           <?php 
             $cantFilas = 0;
             foreach($listaMotif as $detalleMotif){
-              $motifTree = new MotifsTree($detalleMotif[2],count($secuencias),$secuencias,intval($_POST['distancia']),intval($_POST['nPares']));
+              $motifTree = new MotifsTree($detalleMotif[2],count($secuencias),$secuencias,intval($_POST['distancia']),intval($_POST['nPares']), $_POST['optionType']);
               $motifTree->generateMotifsPaths();
               $motifTree->getMotifs();
               $stringAcep = $motifTree->getStringMeans();
@@ -149,9 +149,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 <input type="hidden" class="form-control" value="<?php echo $_POST['distancia'];?>" name='distancia' id='distancia'>
                 <input type="hidden" class="form-control" value="<?php echo $_POST['nPares'];?>" name='radioPB' id='radioPB'>
                 <input type="hidden" class="form-control" value="<?php echo $detalleMotif[2];?>" name='motif' id='motif'>
+                <input type="hidden" class="form-control" value="<?php echo $_POST['optionType'];?>" name='optionType' id='optionType'>
                 <input type="hidden" class="form-control" value="<?php echo $_POST['lblSeq1'];?>" name='lblSeq1' id='lblSeq1'>
                 <?php for($j=0;$j<$tot;$j++){ ?>
                 <input type="hidden" class="form-control" value="<?php echo $_POST['lblSeq'.$posSeq[$j]];?>" name="<?php echo 'lblSeq'.$posSeq[$j]; ?>" id="<?php echo 'lblSeq'.$posSeq[$j]; ?>" >
+                <input type="hidden" class="form-control" value="Drosophila melanogaster" name="<?php echo 'selecSeq1'; ?>" id="<?php echo 'selecSeq1'; ?>">
                 <input type="hidden" class="form-control" value="<?php echo $ortologos[$_POST['selecSeq'.($posSeq[$j])]-1];?>" name="<?php echo 'selecSeq'.$posSeq[$j]; ?>" id="<?php echo 'selecSeq'.$posSeq[$j];?>">
                <?php
                     }               ?>

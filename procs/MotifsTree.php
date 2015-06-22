@@ -14,6 +14,7 @@ class MotifsTree {
 	private $allThePaths = array();
 	private $lenConsensus;
 	private $radioPB;
+	private $zonaPromotora;  //111111uno = zona promotora y 000000000000cero = primer intron.
 	private $mejorSecuencia = array();
 	private $mejorR = 0;
 	private $mejorMaxY = array();
@@ -29,7 +30,7 @@ class MotifsTree {
 	     - radioPb = Radio de pares de bases para analizar
 	     - lenConsensus = Longitud de la secuencia consensus
 	*/
-	function __construct($motifVar, $num, $arraySeq,$d, $radioPb){
+	function __construct($motifVar, $num, $arraySeq,$d, $radioPb, $zonaProm){
 		$this->numFam = $num;
 		$this->txtpatr1 = $motifVar;
 		$this->seqs = $arraySeq;
@@ -37,6 +38,7 @@ class MotifsTree {
 		$this->radioPB = $radioPb;
 		$this->lenConsensus = strlen($this->txtpatr1);
 		$this->findMotifs();
+		$this->zonaPromotora = $zonaProm;
 	}
 	/*Para cada secuencia realiza la busqueda de coincidencias de consensus
 	  como expresion regular.
@@ -56,7 +58,10 @@ class MotifsTree {
 	}
 
 	private function getBorders($pos, $d, $txtlen, $prelen){
-		$len = ( ($prelen - $pos) *$d*1.0)/100.0;
+		if($this->zonaPromotora=="zonapromotora")
+		    $len = ( ($prelen - $pos) *$d*1.0)/100.0;
+		else
+		    $len = ($pos*$d*1.0)/100.0;
 		$left = max($pos-$len, 0);
 		$right = min($pos+$len,$txtlen-1);
 		return array($left, $right);
@@ -102,7 +107,7 @@ class MotifsTree {
 			$XValuesNormal = array();
 			$XValues = array();
 			
-			for($i=-($this->radioPB+5);$i<($this->radioPB+5);$i++){
+			for($i=-($this->radioPB+5);$i<=($this->radioPB+5);$i++){
                 $XValuesNormal[] = $i;
             }        			
 			for($i=-$this->radioPB; $i<=$this->radioPB; $i++){
@@ -149,7 +154,8 @@ class MotifsTree {
 				if($element[$i]=='C') $contC++;
 			}
 			//echo $contA.' '.$contT.' '.$contG.' '.$contC.' '.'<br>';
-			$maxY[] = max(max($contA, $contT),max($contG, $contC))/($contA+$contT+$contG+$contC);				
+			//$maxY[] = max(max($contA, $contT),max($contG, $contC))/($contA+$contT+$contG+$contC);
+			$maxY[] = max(max($contA, $contT),max($contG, $contC))/(count($result));
 		}
 	} 
 
@@ -250,10 +256,28 @@ class MotifsTree {
 			$left = $elem;
 			$right = $elem+$this->lenConsensus;
 			$seqlen = strlen($this->seqs[$index]);
+			
+			//Faltan datos a la izquierda
+			$realDisLeft = $left- $this->radioPB;
+			$stringLeft = '';
+			for($i=0; $i< (-$realDisLeft); $i++)
+			    $stringLeft = $stringLeft.'X';
+			
+			//faltan datos a la derecha    
+			$realDisRight = $right + $this->radioPB;
+			$stringRight = '';
+			for($i=$seqlen; $i<abs($realDisRight); $i++)
+			    $stringRight = $stringRight.'X'; 
+			
+			
+			
 			$left = max(0, $left- $this->radioPB);
 			$right = min($right + $this->radioPB, $seqlen);
 			$stringToAnalyze = substr($this->seqs[$index],$left,$right-$left);
-			$result [] = $stringToAnalyze;
+			
+			
+			
+			$result [] = $stringLeft.$stringToAnalyze.$stringRight;
 			$index = $index+1;
 		}
 		return $result;

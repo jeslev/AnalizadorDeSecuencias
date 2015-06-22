@@ -14,14 +14,34 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 		<title>Gráfica de secuencia para <?php echo $_POST['motif']?></title>
     
         <?php
-        	//DnaJ-1_melanogaster
+        
+            $ortologos = array(
+                                  "inicio 0",
+                                  "Drosophila melanogaster",
+                                  "Drosophila simulans",
+                                  "Drosophila sechellia",
+                                  "Drosophila erecta",
+                                  "Drosophila yakuba",
+                                  "Drosophila ananassae",
+                                  "Drosophila pseudoobscura pseudoobscura",
+                                  "Drosophila persimilis",
+                                  "Drosophila willistoni",
+                                  "Drosophila virilis",
+                                  "Drosophila mojavensis",
+                                  "Drosophila grimshawi");
+        
         	$motif = $_POST['motif'];
             $distancia = $_POST['distancia'];
             $radioPB = $_POST['radioPB'];
             $secuencia = array();
+            $nombresSeq = array();
             for($i=1; $i<=12; $i++){
                 if( isset($_POST['lblSeq'.$i]) ){
                     $secuencia[] = $_POST['lblSeq'.$i];
+                }
+                if(isset($_POST['selecSeq'.$i])){
+                    $nombresSeq[] = $_POST['selecSeq'.$i];
+                    //echo $i.' Nombre '.$_POST['selecSeq'.$i].'<br>';
                 }
             }          
             //echo 'motif: '.$motif.'<br>';
@@ -30,7 +50,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             //echo 'longitud: '.count($secuencia).'<br>';
             //echo 'secuencia: '; foreach($secuencia as $s) echo $s.'<br>'; echo '<br>';
 	//Fase 1
-            $motifs = new MotifsTree($motif,count($secuencia),$secuencia,$distancia,$radioPB);
+            $motifs = new MotifsTree($motif,count($secuencia),$secuencia,$distancia,$radioPB, $_POST['optionType']);
             $motifs->generateMotifsPaths();
         ?>
 
@@ -147,7 +167,7 @@ $(function () {
 
                 <?php echo '<b>R</b> = '.$motifs->getMejorR().'<br><br>'?>
                 <?php echo '<b>motifs</b> = '.$motif.'<br><br>'?>
-                <?php foreach($secuencia as $seq) echo '<b>secuencia</b> = '.$seq.'<br><br>'?>
+                <?php echo '<b>Secuencias</b>:<br>'; for($i=0;$i<count($secuencia);$i++) echo '<b>'.$nombresSeq[$i].'</b> = '.$secuencia[$i].'<br><br>'?>
 
                 </div>        
         </div> 
