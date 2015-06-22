@@ -61,7 +61,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
     <!--jumbotron-->
     <div class="jumbotron">
-      <div class    ="container text-center">
+      <div class="container text-center" id="tituloEstado" name="tituloEstado">
         <h2>Realizando consulta</h2>
         <p> Por favor espere mientras se procesa su consulta.</p>
       </div>

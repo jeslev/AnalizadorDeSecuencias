@@ -1,6 +1,13 @@
 $(document).ready(
+    
+
+
   //agrega campos de secuencia al agregar familia
   function () {
+
+            /*actualiza titulo estado*/
+
+            $("#tituloEstado").html("<h2>Calculo finalizado</h2><p>Puedes observar la tabla inferior para los detalles de los resultados.</p>");
 
             $("#agregaFam").click(function () {
                 if( ($("#panelFam .form-group").length+1) > 12) {
