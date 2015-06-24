@@ -1,6 +1,9 @@
 <?php
+session_start();
 include("procs/MotifsTree.php");
 include("procs/DatosMotif.php");
+//$mm = unserialize($_SESSION['encoded_motifTree']);
+//var_dump($mm->getMotifs());
 if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 ?>
 
@@ -50,8 +53,9 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             //echo 'longitud: '.count($secuencia).'<br>';
             //echo 'secuencia: '; foreach($secuencia as $s) echo $s.'<br>'; echo '<br>';
 	//Fase 1
-            $motifs = new MotifsTree($motif,count($secuencia),$secuencia,$distancia,$radioPB, $_POST['optionType']);
-            $motifs->generateMotifsPaths();
+            //$motifs = new MotifsTree($motif,count($secuencia),$secuencia,$distancia,$radioPB, $_POST['optionType']);
+            //$motifs->generateMotifsPaths();
+            $motifs = unserialize($_SESSION['encoded_motifTree'][$_POST['numFila']]);
         ?>
 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -171,14 +175,24 @@ $(function () {
                     $res = $bd->obtenerResultados();
                     $maxlen = 0;
                     $nombreMotif = $res[0][0]." - ".$res[0][1];
+                    for($i=0;$i<count($secuencia);$i++) {
+                        if(strlen($secuencia[$i])>$maxlen) $maxlen = strlen($secuencia[$i]);
+                    }
                 ?>
                 <?php echo '<b>Motif</b> = '.$nombreMotif.'<br><br>'?>
                 <?php echo '<b>Secuencia Consensus ('.strlen($motif).')</b> = '.$motif.'<br><br>'?>
                 <?php echo '<b>Secuencias</b>:<br>'; 
+                    echo '<table border=0>';
                     for($i=0;$i<count($secuencia);$i++) {
-                        echo '<b>'.$nombresSeq[$i].' ('.strlen($secuencia[$i]).')</b> = '.substr($secuencia[$i],0,$posX[$i]).'<kbd>'.substr($secuencia[$i],$posX[$i],strlen($motif)).'</kbd>'.substr($secuencia[$i],$posX[$i]+strlen($motif)).'<br><br>';
-                        if(strlen($secuencia[$i])>$maxlen) $maxlen = strlen($secuencia[$i]);
+                        echo '<tr><td colspan="100"><b>'.$nombresSeq[$i].' ('.strlen($secuencia[$i]).')</b> =</td></tr>';
+                        echo '<tr>';
+                        for($j=0;$j< ($maxlen-strlen($secuencia[$i]));$j++) echo '<td>-</td>';
+                        for($j=0;$j<$posX[$i];$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
+                        for($j=$posX[$i];$j<($posX[$i]+strlen($motif));$j++) echo '<td><b>'.$secuencia[$i][$j].'</b></td>';
+                        for($j=$posX[$i]+strlen($motif);$j<strlen($secuencia[$i]);$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
+                        echo '</tr>';
                     }
+                    echo '</table>';
                 ?>
 
                 </div>        

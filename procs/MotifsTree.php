@@ -58,12 +58,15 @@ class MotifsTree {
 	}
 
 	private function getBorders($pos, $d, $txtlen, $prelen){
-		if($this->zonaPromotora=="zonapromotora")
+		$nvar=0;
+		if($this->zonaPromotora=="zonapromotora"){
 		    $len = ( ($prelen - $pos) *$d*1.0)/100.0;
+		    $nvar =$prelen -$txtlen;
+			}
 		else
 		    $len = ($pos*$d*1.0)/100.0;
-		$left = max($pos-$len, 0);
-		$right = min($pos+$len,$txtlen-1);
+		$left = max($nvar+$pos-$len, 0);
+		$right = min($nvar+$pos+$len,$txtlen-1);
 		return array($left, $right);
 	}
 	

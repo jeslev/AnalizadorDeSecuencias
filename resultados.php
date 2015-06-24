@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <?php 
+session_start();
 include("procs/DatosMotif.php");
 include("procs/MotifsTree.php");
 ini_set('max_execution_time', 300); //300 seconds = 5 minutes
 if( isset($_POST['motif']) && !empty($_POST['motif']) ){
+  $_SESSION['encoded_motifTree'] = array();
 ?>
 
 <html lang="en">
@@ -127,6 +129,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
               $stringAcep = $motifTree->getStringMeans();
               //echo $stringAcep.'sdfsadf<br>';
               if(strlen($stringAcep)>0){ 
+                    $_SESSION['encoded_motifTree'][] = serialize($motifTree);
                     $cantFilas++;             
           ?>
           <tr>
@@ -155,6 +158,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 <input type="hidden" class="form-control" value="<?php echo $_POST['lblSeq'.$posSeq[$j]];?>" name="<?php echo 'lblSeq'.$posSeq[$j]; ?>" id="<?php echo 'lblSeq'.$posSeq[$j]; ?>" >
                 <input type="hidden" class="form-control" value="Drosophila melanogaster" name="<?php echo 'selecSeq1'; ?>" id="<?php echo 'selecSeq1'; ?>">
                 <input type="hidden" class="form-control" value="<?php echo $ortologos[$_POST['selecSeq'.($posSeq[$j])]-1];?>" name="<?php echo 'selecSeq'.$posSeq[$j]; ?>" id="<?php echo 'selecSeq'.$posSeq[$j];?>">
+                <input type="hidden" class="form-control" value="<?php echo ($cantFilas-1);?>" id="numFila" name="numFila">
                <?php
                     }               ?>
                 <center><button type="submit" class="btn btn-success btn-large">Graficar</button><center>
