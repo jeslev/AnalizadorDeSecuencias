@@ -2,7 +2,7 @@
 <?php 
 include("procs/DatosMotif.php");
 include("procs/MotifsTree.php");
-
+ini_set('max_execution_time', 300); //300 seconds = 5 minutes
 if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 ?>
 

@@ -1,6 +1,6 @@
 <?php
 include("procs/MotifsTree.php");
-
+include("procs/DatosMotif.php");
 if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 ?>
 
@@ -165,20 +165,34 @@ $(function () {
             <div class="panel-heading"><h4><b>Resultados obtenidos</b></h4></div>
                 <div class="panel-body">
 
-                <?php echo '<b>R</b> = '.$motifs->getMejorR().'<br><br>'?>
-                <?php echo '<b>motifs</b> = '.$motif.'<br><br>'?>
-                <?php echo '<b>Secuencias</b>:<br>'; for($i=0;$i<count($secuencia);$i++) echo '<b>'.$nombresSeq[$i].'</b> = '.$secuencia[$i].'<br><br>'?>
+                <?php echo '<b>R</b> = '.$motifs->getMejorR().'<br><br>';
+                    $posX = $motifs->getColaPosiciones(); 
+                    $bd = new DatosMotif($motif);
+                    $res = $bd->obtenerResultados();
+                    $maxlen = 0;
+                    $nombreMotif = $res[0][0]." - ".$res[0][1];
+                ?>
+                <?php echo '<b>Motif</b> = '.$nombreMotif.'<br><br>'?>
+                <?php echo '<b>Secuencia Consensus ('.strlen($motif).')</b> = '.$motif.'<br><br>'?>
+                <?php echo '<b>Secuencias</b>:<br>'; 
+                    for($i=0;$i<count($secuencia);$i++) {
+                        echo '<b>'.$nombresSeq[$i].' ('.strlen($secuencia[$i]).')</b> = '.substr($secuencia[$i],0,$posX[$i]).'<kbd>'.substr($secuencia[$i],$posX[$i],strlen($motif)).'</kbd>'.substr($secuencia[$i],$posX[$i]+strlen($motif)).'<br><br>';
+                        if(strlen($secuencia[$i])>$maxlen) $maxlen = strlen($secuencia[$i]);
+                    }
+                ?>
 
                 </div>        
         </div> 
+    </div>
+    <div class="container" >
         <div class="panel panel-default" >
             <div class="panel-heading"><h4><b>Gráfica de conservación para el motif</b></h4></div>
                 <div class="panel-body" id="grafica">
 
                 </div>        
         </div>
-        
-        
+    </div>    
+    <div class="container" style="overflow:scroll;">
         <div class="panel panel-default">
             <div class="panel-heading"><h4><b>Desplazamiento del motif</b></h4></div>
                 <div class="panel-body">
@@ -200,8 +214,10 @@ $(function () {
                     //echo var_dump($posX);
                     for($i=0;$i<count($secuencia);$i++){ 
                     
-                        //echo '<b>'.$nombresSeq[$i].'</b><br><br>';                
-                        $iniX = 150;
+                        //echo '<b>'.$nombresSeq[$i].'</b><br><br>';      
+                        $desplazamiento =   ( $maxlen - strlen($secuencia[$i]));
+                        if( strcmp($_POST['optionType'], "zonapromotora") != 0) $desplazamiento=0;
+                        $iniX = $desplazamiento;
                         $finX = $iniX+strlen($secuencia[$i]);
                         $inifinY = $posY[$i];
                         $postextoY = $posY[$i]-10;
@@ -217,11 +233,13 @@ $(function () {
                           ";
                           
                             if($i>0){
+                                $predesplazamiento =   ( $maxlen - strlen($secuencia[$i-1]));
+                                if( strcmp($_POST['optionType'], "zonapromotora") != 0) $predesplazamiento=0;
                             echo   "
                                     context.beginPath();
                                     context.strokeStyle='".$colorsCanvas[$i-1]."';
-                                    context.moveTo(".($posX[$i-1]+150).", ".$posY[$i-1].");
-                                    context.lineTo(".($posX[$i]+150).", ".$posY[$i].");
+                                    context.moveTo(".($posX[$i-1]+$predesplazamiento).", ".$posY[$i-1].");
+                                    context.lineTo(".($posX[$i]+$desplazamiento).", ".$posY[$i].");
                                     context.stroke();
                                     ";      
                          }
