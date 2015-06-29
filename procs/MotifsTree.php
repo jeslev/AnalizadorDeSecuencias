@@ -139,7 +139,7 @@ class MotifsTree {
 			            $this->colaPosiciones[] = strlen($this->seqs[$ii]) - $posicion;
 			        else
 			            $this->colaPosiciones[] = $posicion;
-			        $i++;
+			        $ii++;
 			    }
 			    $this->priorityQueue->insert(array($this->normalYValues, $this->mejorMaxY, $this->colaPosiciones), -1*$this->mejorR);
 			    if($this->priorityQueue->count()>5){

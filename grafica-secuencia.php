@@ -58,14 +58,6 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                     //echo $i.' Nombre '.$_POST['selecSeq'.$i].'<br>';
                 }
             }          
-            //echo 'motif: '.$motif.'<br>';
-            //echo 'distancia: '.$distancia.'<br>';
-            //echo 'radioPB: '.$radioPB.'<br>';
-            //echo 'longitud: '.count($secuencia).'<br>';
-            //echo 'secuencia: '; foreach($secuencia as $s) echo $s.'<br>'; echo '<br>';
-	//Fase 1
-            //$motifs = new MotifsTree($motif,count($secuencia),$secuencia,$distancia,$radioPB, $_POST['optionType']);
-            //$motifs->generateMotifsPaths();
             $motifs = unserialize($_SESSION['encoded_motifTree'][$_POST['numFila']]);
         ?>
 
@@ -74,13 +66,14 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
         body{
             padding-top: 70px;
         }
-${demo.css}
+            ${demo.css}
 		</style>
 
 		<script type="text/javascript">
 
         $(function () {
-            $('#grafica').highcharts({
+            <?php for($i=0;$i<6;$i++){?>
+            $('#grafica1').highcharts({
                 chart: {
                     type: 'line'
                 },
@@ -148,6 +141,7 @@ ${demo.css}
                 }        
                 ]
             });
+            <?php }?>
         });
 		</script>		       
 
@@ -239,6 +233,11 @@ ${demo.css}
                     $posY = array();
                     for($k=0;$k<count($secuencia);$k++) $posY[] = 50+100*$k;
                     $posX = $motifs->getColaPosiciones(); 
+                    if( strcmp($_POST['optionType'], "zonapromotora") == 0){
+                        for($tt=0;$tt<sizeof($posX);$tt++){
+                            $posX[$tt] = strlen($secuencia[$tt]-$posX[$tt]);
+                        }
+                    }
                     //echo var_dump($posX);
                     for($i=0;$i<count($secuencia);$i++){ 
                     
@@ -287,10 +286,10 @@ ${demo.css}
 
   <!-- Trigger the modal with a button -->
   
-  <center><button type="button" class="btn btn-info btn-large" data-toggle="modal" data-target="#myModal">Open Modal</button></center>
+  <center><button type="button" class="btn btn-info btn-large" data-toggle="modal" data-target="#graficas">Open Modal</button></center>
 
   <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="graficas" role="dialog">
     <div class="modal-dialog modal-lg">
     
       <!-- Modal content-->
@@ -300,21 +299,20 @@ ${demo.css}
           <h4 class="modal-title">Modal Header</h4>
         
         
-          <script type="text/javascript">
-
-        //Acá van a ir las gráficas
-		    </script>       
-        
-        <?php for($i=0; $i<5; $i++) echo 'love you<3 !! <br/>'?>
         
         </div>
         <div class="modal-body">
           <?php 
-            //for($i=0; $i<3; $i++){
+            for($i=0; $i<5; $i++){
           ?>
-    	  
+    	  <div class="panel panel-default" >
+            <div class="panel-heading"><h4><b>Gráfica de conservación para el motif</b></h4></div>
+                <div class="panel-body" id="grafica1">
+
+                </div>        
+            </div>
           <?php
-          //}
+          }
           ?>
         </div>
         <div class="modal-footer">
