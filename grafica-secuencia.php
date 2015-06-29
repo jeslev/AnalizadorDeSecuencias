@@ -14,6 +14,17 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="icon" href="icono.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--Library form's-->
+        <script src="js/funciones.js"></script>
+        <script src="js/jquery.dataTables.min.js"></script>      
+        <script src="js/dataTables.bootstrap.js"></script>      
+        <script src="js/control.js"></script>      
 		<title>Gráfica de secuencia para <?php echo $_POST['motif']?></title>
     
         <?php
@@ -65,78 +76,81 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
         }
 ${demo.css}
 		</style>
+
 		<script type="text/javascript">
-$(function () {
-    $('#grafica').highcharts({
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Conservación de nuclétidos alrededor del motif'
-        },
-        subtitle: {
-            text: 'By: <a href="http://www.uni.edu.pe">' +
-                'Biología Computacional 2015-1</a>'
-        },
-        xAxis: {
-            allowDecimals: false,
-            tickInterval: 0.1,
-            labels: {         
-                formatter: function () {
-                    return this.value; // clean, unformatted number for year
-                }
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Frecuencias'
-            },
-            labels: {
-                formatter: function () {
-                    return this.value;
-                }
-            }
-        },
-        tooltip: {
-            pointFormat: '{series.name} <br/>'
-        },
-        plotOptions: {
-            line: {
-                pointStart: -<?php echo $radioPB+5 ?>,
-                color: '#0AE85F',
-                marker: {
-                    enabled: false,
-                    symbol: 'circle',
-                    radius: 0,
-                    states: {
-                        hover: {
-                            enabled: true
+
+        $(function () {
+            $('#grafica').highcharts({
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Conservación de nuclétidos alrededor del motif'
+                },
+                subtitle: {
+                    text: 'By: <a href="http://www.uni.edu.pe">' +
+                        'Biología Computacional 2015-1</a>'
+                },
+                xAxis: {
+                    allowDecimals: false,
+                    tickInterval: 0.1,
+                    labels: {         
+                        formatter: function () {
+                            return this.value; // clean, unformatted number for year
                         }
                     }
-                }
-            },
-            column: {
-                pointPadding: -0.34,
-                borderWidth: 1
+                },
+                yAxis: {
+                    title: {
+                        text: 'Frecuencias'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value;
+                        }
+                    }
+                },
+                tooltip: {
+                    pointFormat: '{series.name} <br/>'
+                },
+                plotOptions: {
+                    line: {
+                        pointStart: -<?php echo $radioPB+5 ?>,
+                        color: '#0AE85F',
+                        marker: {
+                            enabled: false,
+                            symbol: 'circle',
+                            radius: 0,
+                            states: {
+                                hover: {
+                                    enabled: true
+                                }
+                            }
+                        }
+                    },
+                    column: {
+                        pointPadding: 0.55,
+                        borderWidth: 1
 
-            }
-        },
-        series: [        
-        {
-            type: 'column',    
-            name: 'Frecuencia de nucléotido',
-            color: '#44A0F0',
-            pointStart: -<?php echo $radioPB ?>,
-            data: [<?php echo $motifs->getStringMeans() ?>]          
-        },
-        {                    
-            name: 'Ecuación Ideal',            
-            data: [<?php echo $motifs->getNormalValues() ?>]
-        }        
-           ]
-    });
-});
-		</script>
+                    }
+                },
+                series: [        
+                {
+                    type: 'column',    
+                    name: 'Frecuencia de nucléotido',
+                    color: '#44A0F0',
+                    pointStart: -<?php echo $radioPB ?>,
+                    data: [<?php echo $motifs->getStringMeans() ?>]          
+                },
+                {                    
+                    name: 'Ecuación Ideal',            
+                    data: [<?php echo $motifs->getNormalValues() ?>],            
+                }        
+                ]
+            });
+        });
+		</script>		       
+
 	</head>
 	<body>
         <script src="Highcharts-4.1.6/js/highcharts.js"></script>
@@ -266,6 +280,54 @@ $(function () {
         </div>
             
     </div>
+    
+
+<!----------------------------------------------------------------------------------------------------------------->
+
+
+  <!-- Trigger the modal with a button -->
+  
+  <center><button type="button" class="btn btn-info btn-large" data-toggle="modal" data-target="#myModal">Open Modal</button></center>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">        
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        
+        
+          <script type="text/javascript">
+
+        //Acá van a ir las gráficas
+		    </script>       
+        
+        <?php for($i=0; $i<5; $i++) echo 'love you<3 !! <br/>'?>
+        
+        </div>
+        <div class="modal-body">
+          <?php 
+            //for($i=0; $i<3; $i++){
+          ?>
+    	  
+          <?php
+          //}
+          ?>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+    
+<!----------------------------------------------------------------------------------------------------------------->
+
  
 	</body>
 </html>

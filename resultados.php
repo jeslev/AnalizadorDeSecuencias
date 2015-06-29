@@ -144,6 +144,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             ?>
             <th><?php //echo $_POST['lblSeq'.$posSeq[$i]]; 
                     echo $posicionesMotif;
+                    $motifTree->getPriorityQueue();
                 ?>
             </th>
             <?php } ?>
