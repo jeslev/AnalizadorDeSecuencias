@@ -22,7 +22,7 @@ class MotifsTree {
     private $mejorMean;
 	private	$mejorDesviacion;
 	private $colaPosiciones = array();
-
+    private $priorityQueue;
 	/*Constructor
 	     - numfam = Numero de familias(secuencias) a analizar
 	     - seq = Array de las secuencias
@@ -39,6 +39,8 @@ class MotifsTree {
 		$this->lenConsensus = strlen($this->txtpatr1);
 		$this->findMotifs();
 		$this->zonaPromotora = $zonaProm;
+		$this->priorityQueue = new SplPriorityQueue();
+		
 	}
 	/*Para cada secuencia realiza la busqueda de coincidencias de consensus
 	  como expresion regular.
@@ -81,6 +83,8 @@ class MotifsTree {
 			$this->recursiveBuilding($this->distPercent, $motif, 1, $path);
 		}
 	}
+	
+	
 
 	/*
 	Funcion recursiva para generar todas las combinaciones
@@ -129,8 +133,17 @@ class MotifsTree {
 			    $this->normalYValues = $this->calcularNormalValues($XValuesNormal, $mean, $desviationEstandar); 
 			    $this->mejorMaxY = $maxY;
                 $this->colaPosiciones = array();
+                $ii = 0;
 			    foreach($finalPath as $posicion){
-			        $this->colaPosiciones[] = $posicion;
+                    if($this->zonaPromotora=="zonapromotora")
+			            $this->colaPosiciones[] = strlen($this->seqs[$ii]) - $posicion;
+			        else
+			            $this->colaPosiciones[] = $posicion;
+			        $i++;
+			    }
+			    $this->priorityQueue->insert(array($this->normalYValues, $this->mejorMaxY, $this->colaPosiciones), -1*$this->mejorR);
+			    if($this->priorityQueue->count()>5){
+			        $this->priorityQueue->extract();
 			    }
 			}
 			return;
@@ -146,6 +159,17 @@ class MotifsTree {
 			}
 		}
 	}
+
+    public function getPriorityQueue(){
+        $auxiliar = $this->priorityQueue;
+        $auxiliar->setExtractFlags(SplPriorityQueue::EXTR_BOTH);
+        //$this->priorityQueue->setExtractFlags(SplPriorityQueue::EXTR_PRIORITY);    
+        while ($auxiliar->valid()) {
+            echo "<br/>";
+            print_r($auxiliar->current());
+            $auxiliar->next();
+        }
+    }
 
 	public function contATGC($result, $start, $end, &$maxY){
 		for($i=$start;$i<$end;$i++){
