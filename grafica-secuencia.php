@@ -59,9 +59,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             //$motifs->generateMotifsPaths();
             //Para ver que imprime.. el objeto.. si se observa no se pasa la cola de prioridades.
             $arrayCola = $motifs->getArrayCola();
-            echo var_dump($arrayCola);
-            echo '<br><br>';
-            $_SESSION['mejores_motifTree'] = serialize($motifs);
+            $_SESSION['mejores_motifTree'] = $_SESSION['encoded_motifTree'][$_POST['numFila']];
         ?>
 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -182,6 +180,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
                 <?php echo '<b>R</b> = '.$motifs->getMejorR().'<br><br>';
                     $posX = $motifs->getColaPosiciones(); 
+                    echo '<br><br>'.var_dump($posX).'<br><br>';
                     $bd = new DatosMotif($motif);
                     $res = $bd->obtenerResultados();
                     $maxlen = 0;
@@ -238,7 +237,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                     $posX = $motifs->getColaPosiciones(); 
                     if( strcmp($_POST['optionType'], "zonapromotora") == 0){
                         for($tt=0;$tt<sizeof($posX);$tt++){
-                            $posX[$tt] = strlen($secuencia[$tt]-$posX[$tt]);
+                            $posX[$tt] = strlen($secuencia[$tt]+$posX[$tt]);
                         }
                     }
                     //echo var_dump($posX);
@@ -289,9 +288,10 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 <input type="hidden" class="form-control" value="<?php echo $_POST['motif'];?>" name='motif' id='motif'>
                 <input type="hidden" class="form-control" value="<?php echo $_POST['optionType'];?>" name='optionType' id='optionType'>
                 <?php for($j=0;$j<count($secuencia);$j++){ ?>
-                <input type="hidden" class="form-control" value="<?php echo $secuencia[$j];?>" name="<?php echo 'lblSeq'.$j ?>" id="<?php echo 'lblSeq'.$j ?>" >
+                <input type="hidden" class="form-control" value="<?php echo $secuencia[$j];?>" name="<?php echo 'lblSeq'.$j; ?>" id="<?php echo 'lblSeq'.$j ?>" >
                 <input type="hidden" class="form-control" value="<?php echo $nombresSeq[$j];?>" name="<?php echo 'selecSeq'.$j; ?>" id="<?php echo 'selecSeq'.$j; ?>">
                 <input type="hidden" class="form-control" value="<?php echo $_POST['numFila'];?>" id="numFila" name="numFila">
+                <input type="hidden" class="form-control" value="<?php echo $maxlen;?>" id="maxLen" name="maxLen">
                <?php
                     }               ?>
   <br><br>

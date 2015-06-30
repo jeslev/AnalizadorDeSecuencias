@@ -137,16 +137,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             <th><?php echo $detalleMotif[2] ?></th>
            <!-- <th><?php echo $_POST['lblSeq1']; ?></th> -->
             <?php 
-                //acá si aparecen los datos de la cola de prioridades.. 
-                echo var_dump($motifTree->getArrayCola());
-                echo "<br><br><br>";
                 $posiciones = $motifTree->getColaPosiciones();
-                //for($i=0;$i<$tot;$i++){ 
                 foreach($posiciones as $posicionesMotif){
             ?>
             <th><?php //echo $_POST['lblSeq'.$posSeq[$i]]; 
                     echo $posicionesMotif;
-                    //$motifTree->getPriorityQueue();
                 ?>
             </th>
             <?php } ?>
