@@ -4,7 +4,6 @@ include("procs/MotifsTree.php");
 include("procs/DatosMotif.php");
 if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 ?>
-
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -23,7 +22,6 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 		<title>Muestra de las mejores opciones para <?php echo $_POST['motif']?></title>
     
         <?php
-                            
         	$motif = $_POST['motif'];
             $distancia = $_POST['distancia'];
             $radioPB = $_POST['radioPB'];
@@ -31,27 +29,16 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             $secuencia = array();
             $nombresSeq = array();
             
-            echo var_dump($_POST);
-            
             for($i=0; $i<=12; $i++){
                 if( isset($_POST['lblSeq'.$i]) ){
                     $secuencia[] = $_POST['lblSeq'.$i];
                 }
                 if(isset($_POST['selecSeq'.$i])){
                     $nombresSeq[] = $_POST['selecSeq'.$i];
-                    //echo $i.' Nombre '.$_POST['selecSeq'.$i].'<br>';
                 }
             }
-            //echo var_dump($secuencia).'<br><br>';
-            //echo var_dump($nombresSeq).'<br><br>';
-        	echo $radioPB.'<br>';
-            
             $motifs = unserialize($_SESSION['mejores_motifTree']);            
-            //echo var_dump($motifs)."<br><br><br>";
             $arrayCola = $motifs->getArrayCola();
-            //for($i=0;$i<count($arrayCola); $i++){
-                //echo var_dump($arrayCola[$i]).'<br><br><br>';
-            //}
         ?>
 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -68,7 +55,6 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             <?php 
                 $sizeCola = 0;
                 while ($sizeCola < count($arrayCola)) {
-                    //El while de la linea 40 debería estar acá..                                        
             ?>
             $(<?php echo "'#grafica".$sizeCola."'"; ?>).highcharts({
                 chart: {
@@ -121,7 +107,6 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                     column: {
                         pointPadding: 0.55,
                         borderWidth: 1
-
                     }
                 },
                 series: [        
@@ -184,9 +169,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
           </div>
       </div>
     </nav>
-
 <!------------------------------------------------------------------------------------------------------------------>
-
     <div class="container" >
           <?php 
             for($varx=0; $varx<$sizeCola; $varx++){
@@ -194,23 +177,18 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
     	  <div class="panel panel-default" >
             <div class="panel-heading"><h4><b>Gráfica de conservación para el motif</b></h4></div>
                 <div class="panel-body" id="<?php echo 'grafica'.$varx?>">                               
-                                
                 </div>
-                
-                
                 <!------------------------------------------------------------>
            <div class="panel-footer" style="overflow:scroll;">
-                
+                <?php echo '<b>R = '.$arrayCola[$varx][3].'</b><br><br>'; ?>
                 <canvas id="<?php echo 'myCanvas'.$varx; ?>" width='20000' height="<?php echo count($secuencia)*105; ?>"></canvas>
                 <?php
-                    echo var_dump($arrayCola[$varx][2]);
                     echo"
                     <script>
                       var canvas = document.getElementById('myCanvas".$varx."');
                       var context = canvas.getContext('2d');
                     ";
                 ?>
-                
                 <?php 
                     $colorsCanvas = array("#ff0000","#00ff00","#0000ff","#ff00ff","#ffff00","#00ffff","#55bb55","#5555bb","#bb5555","#bbccdd","#ddccbb","#ccddbb");
                     $posY = array();
@@ -218,12 +196,10 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                     $posX = $arrayCola[$varx][2]; 
                     if( strcmp($_POST['optionType'], "zonapromotora") == 0){
                         for($tt=0;$tt<sizeof($posX);$tt++){
-                            $posX[$tt] = strlen($secuencia[$tt]+$posX[$tt]);
+                            $posX[$tt] = strlen($secuencia[$tt])-$posX[$tt];
                         }
                     }
-                    //echo var_dump($posX);
                     for($i=0;$i<count($secuencia);$i++){ 
-                        //echo '<b>'.$nombresSeq[$i].'</b><br><br>';      
                         $desplazamiento =   ( $maxlen - strlen($secuencia[$i]));
                         if( strcmp($_POST['optionType'], "zonapromotora") != 0) $desplazamiento=0;
                         $iniX = $desplazamiento;
@@ -234,7 +210,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                          " 
                           context.beginPath();
                           context.strokeStyle = '#444040';
-                          context.fillText('".$nombresSeq[$i]."',10,".$postextoY.");
+                          context.fillText('".$nombresSeq[$i]." (".strlen($secuencia[$i]).") - Encontrado en: ".$arrayCola[$varx][2][$i]."',10,".$postextoY.");
                           context.moveTo(".$iniX.", ".$inifinY.");
                           context.lineTo(".$finX.", ".$inifinY.");
                           context.lineWidth = 4;

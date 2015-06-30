@@ -180,7 +180,6 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
                 <?php echo '<b>R</b> = '.$motifs->getMejorR().'<br><br>';
                     $posX = $motifs->getColaPosiciones(); 
-                    echo '<br><br>'.var_dump($posX).'<br><br>';
                     $bd = new DatosMotif($motif);
                     $res = $bd->obtenerResultados();
                     $maxlen = 0;
@@ -237,7 +236,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                     $posX = $motifs->getColaPosiciones(); 
                     if( strcmp($_POST['optionType'], "zonapromotora") == 0){
                         for($tt=0;$tt<sizeof($posX);$tt++){
-                            $posX[$tt] = strlen($secuencia[$tt]+$posX[$tt]);
+                            $posX[$tt] = strlen($secuencia[$tt])-$posX[$tt];
                         }
                     }
                     //echo var_dump($posX);
@@ -294,10 +293,9 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 <input type="hidden" class="form-control" value="<?php echo $maxlen;?>" id="maxLen" name="maxLen">
                <?php
                     }               ?>
-  <br><br>
                 <center><button type="submit" class="btn btn-success btn-large">Más valores de R</button><center>
-                </form>
-  <br><br>  
+    </form>
+    <br><br>  
     
     
 	</body>

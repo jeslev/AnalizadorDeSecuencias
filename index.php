@@ -121,7 +121,7 @@
                 </div>
                   <div class="form-group">
                       <label></label>
-                      <button type="button" class="btn btn-success" id="agregaFam">Agregar familia</button> 
+                      <button type="button" class="btn btn-success" id="agregaFam">Agregar especie</button> 
                       <button type="button" class="btn btn-warning" id="borrarFam">Remover</button>      
                   </div> 
                 </div>
