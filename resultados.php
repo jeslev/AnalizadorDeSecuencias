@@ -138,8 +138,8 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
            <!-- <th><?php echo $_POST['lblSeq1']; ?></th> -->
             <?php 
                 //acá si aparecen los datos de la cola de prioridades.. 
-                //echo var_dump($motifTree->getCola());
-                //echo "<br><br><br>";
+                echo var_dump($motifTree->getArrayCola());
+                echo "<br><br><br>";
                 $posiciones = $motifTree->getColaPosiciones();
                 //for($i=0;$i<$tot;$i++){ 
                 foreach($posiciones as $posicionesMotif){

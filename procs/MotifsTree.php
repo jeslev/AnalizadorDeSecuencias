@@ -23,6 +23,7 @@ class MotifsTree {
 	private	$mejorDesviacion;
 	private $colaPosiciones = array();
     private $priorityQueue;
+    private $arrayCola = array();
 	
 	/*Constructor
 	     - numfam = Numero de familias(secuencias) a analizar
@@ -82,6 +83,16 @@ class MotifsTree {
 			$path->push($motif);
 			$this->recursiveBuilding($this->distPercent, $motif, 1, $path);
 		}
+		$auxiliar = $this->priorityQueue;
+        $auxiliar->setExtractFlags(SplPriorityQueue::EXTR_BOTH);
+        //$this->priorityQueue->setExtractFlags(SplPriorityQueue::EXTR_PRIORITY);    
+        while ($auxiliar->valid()) {
+            //echo "<br/>";
+            //print_r($auxiliar->current());
+            $actual = $auxiliar->current();
+            $this->arrayCola[] = array($actual['data'][0], $actual['data'][1], $actual['data'][2], $actual['priority']*-1);
+            $auxiliar->next();
+        }		
 	}
 	
 	/*
@@ -157,20 +168,12 @@ class MotifsTree {
 		}
 	}
 
-    public function getPriorityQueue(){
-        $auxiliar = $this->priorityQueue;
-        $auxiliar->setExtractFlags(SplPriorityQueue::EXTR_BOTH);
-        //$this->priorityQueue->setExtractFlags(SplPriorityQueue::EXTR_PRIORITY);    
-        while ($auxiliar->valid()) {
-            echo "<br/>";
-            print_r($auxiliar->current());
-            $auxiliar->next();
-        }
-    }
+   // public function getPriorityQueue(){
+        
+   // }
     
-    public function getCola(){
-        $auxiliar2 = $this->priorityQueue;
-        return $auxiliar2;
+    public function getArrayCola(){      
+        return $this->arrayCola;
     }
 
 	public function contATGC($result, $start, $end, &$maxY){

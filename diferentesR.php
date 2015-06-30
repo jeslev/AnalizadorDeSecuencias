@@ -32,9 +32,12 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             $nombresSeq = array();
             
             $motifs = unserialize($_SESSION['mejores_motifTree']);            
-            echo var_dump($motifs);
+            //echo var_dump($motifs)."<br><br><br>";
+            $arrayCola = $motifs->getArrayCola();
+            for($i=0;$i<count($arrayCola); $i++){
+                echo var_dump($arrayCola[$i]).'<br><br><br>';
+            }
             //$cola = $motifs->getPriorityQueue();
-            $motifs->getPriorityQueue();
             //echo var_dump($cola);
             //$cola->setExtractFlags(SplPriorityQueue::EXTR_BOTH);
             //while ($cola->valid()) {
@@ -57,9 +60,8 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
         $(function () {
             <?php 
                 $sizeCola = 0;
-                while ($sizeCola<=5) {
-                    //El while de la linea 40 debería estar acá.. 
-                    $sizeCola++;                    
+                while ($sizeCola < count($arrayCola)) {
+                    //El while de la linea 40 debería estar acá..                                        
             ?>
             $(<?php echo "'#grafica".$sizeCola."'"; ?>).highcharts({
                 chart: {
@@ -121,11 +123,25 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                     name: 'Frecuencia de nucléotido',
                     color: '#44A0F0',
                     pointStart: -<?php echo $radioPB ?>,
-                    data: [<?php echo $motifs->getStringMeans() ?>]          
+                    data: [<?php $MeanString = '';	   
+	                            for($i = 0; $i<count($arrayCola[$sizeCola][1]); $i++){
+	                                if($i!=0) 
+	                                    $MeanString=$MeanString.', ';
+	                                $MeanString = $MeanString.$arrayCola[$sizeCola][1][$i]; 
+	                            }
+	                            echo $MeanString; 
+	                       ?>]          
                 },
                 {                    
                     name: 'Ecuación Ideal',            
-                    data: [<?php echo $motifs->getNormalValues() ?>],            
+                    data: [<?php $normalValuesString = '';
+	                            for($i = 0; $i<count($arrayCola[$sizeCola][0]); $i++){
+	                                if($i!=0) 
+	                                    $normalValuesString=$normalValuesString.', ';
+	                                $normalValuesString = $normalValuesString.$arrayCola[$sizeCola][0][$i]; 
+	                            }
+	                            echo  $normalValuesString;
+	                      ?>],            
                 }        
                 ]
             });
@@ -164,7 +180,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
     <div class="container" >
           <?php 
-            for($i=1; $i<=$sizeCola; $i++){
+            for($i=0; $i<$sizeCola; $i++){
           ?>
     	  <div class="panel panel-default" >
             <div class="panel-heading"><h4><b>Gráfica de conservación para el motif</b></h4></div>

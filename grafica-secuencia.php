@@ -5,7 +5,6 @@ include("procs/DatosMotif.php");
 //$mm = unserialize($_SESSION['encoded_motifTree']);
 //var_dump($mm->getMotifs());
 if( isset($_POST['motif']) && !empty($_POST['motif']) ){
-    $_SESSION['mejores_motifTree'];
 ?>
 
 <!DOCTYPE HTML>
@@ -57,9 +56,10 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 }
             }          
             $motifs = unserialize($_SESSION['encoded_motifTree'][$_POST['numFila']]);
-            $motifs->generateMotifsPaths();
+            //$motifs->generateMotifsPaths();
             //Para ver que imprime.. el objeto.. si se observa no se pasa la cola de prioridades.
-            //echo var_dump($motifs->getCola());
+            $arrayCola = $motifs->getArrayCola();
+            echo var_dump($arrayCola);
             echo '<br><br>';
             $_SESSION['mejores_motifTree'] = serialize($motifs);
         ?>
