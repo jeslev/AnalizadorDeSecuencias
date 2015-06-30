@@ -14,7 +14,7 @@ class MotifsTree {
 	private $allThePaths = array();
 	private $lenConsensus;
 	private $radioPB;
-	private $zonaPromotora;  //111111uno = zona promotora y 000000000000cero = primer intron.
+	private $zonaPromotora;
 	private $mejorSecuencia = array();
 	private $mejorR = 0;
 	private $mejorMaxY = array();
@@ -23,6 +23,7 @@ class MotifsTree {
 	private	$mejorDesviacion;
 	private $colaPosiciones = array();
     private $priorityQueue;
+	
 	/*Constructor
 	     - numfam = Numero de familias(secuencias) a analizar
 	     - seq = Array de las secuencias
@@ -37,10 +38,9 @@ class MotifsTree {
 		$this->distPercent = $d;
 		$this->radioPB = $radioPb;
 		$this->lenConsensus = strlen($this->txtpatr1);
-		$this->findMotifs();
 		$this->zonaPromotora = $zonaProm;
 		$this->priorityQueue = new SplPriorityQueue();
-		
+        $this->findMotifs();		
 	}
 	/*Para cada secuencia realiza la busqueda de coincidencias de consensus
 	  como expresion regular.
@@ -84,8 +84,6 @@ class MotifsTree {
 		}
 	}
 	
-	
-
 	/*
 	Funcion recursiva para generar todas las combinaciones
 	El resultado es almacenado en allThePaths
@@ -100,7 +98,6 @@ class MotifsTree {
 			foreach ($path as $elem) {
 				$finalPath[] = $elem;
 			}
-			
 			$result=$this->getStringPaths($finalPath);
 	//		foreach($result as $element)	echo $element."<br>";
 			$maxY=array();
@@ -169,6 +166,11 @@ class MotifsTree {
             print_r($auxiliar->current());
             $auxiliar->next();
         }
+    }
+    
+    public function getCola(){
+        $auxiliar2 = $this->priorityQueue;
+        return $auxiliar2;
     }
 
 	public function contATGC($result, $start, $end, &$maxY){

@@ -127,7 +127,6 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
               $motifTree->generateMotifsPaths();
               $motifTree->getMotifs();
               $stringAcep = $motifTree->getStringMeans();
-              //echo $stringAcep.'sdfsadf<br>';
               if(strlen($stringAcep)>0){ 
                     $_SESSION['encoded_motifTree'][] = serialize($motifTree);
                     $cantFilas++;             
@@ -138,6 +137,9 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             <th><?php echo $detalleMotif[2] ?></th>
            <!-- <th><?php echo $_POST['lblSeq1']; ?></th> -->
             <?php 
+                //acá si aparecen los datos de la cola de prioridades.. 
+                //echo var_dump($motifTree->getCola());
+                //echo "<br><br><br>";
                 $posiciones = $motifTree->getColaPosiciones();
                 //for($i=0;$i<$tot;$i++){ 
                 foreach($posiciones as $posicionesMotif){

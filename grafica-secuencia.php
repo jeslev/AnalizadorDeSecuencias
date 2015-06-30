@@ -5,6 +5,7 @@ include("procs/DatosMotif.php");
 //$mm = unserialize($_SESSION['encoded_motifTree']);
 //var_dump($mm->getMotifs());
 if( isset($_POST['motif']) && !empty($_POST['motif']) ){
+    $_SESSION['mejores_motifTree'];
 ?>
 
 <!DOCTYPE HTML>
@@ -22,9 +23,6 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
         <script src="js/bootstrap.min.js"></script>
         <!--Library form's-->
         <script src="js/funciones.js"></script>
-        <script src="js/jquery.dataTables.min.js"></script>      
-        <script src="js/dataTables.bootstrap.js"></script>      
-        <script src="js/control.js"></script>      
 		<title>Gráfica de secuencia para <?php echo $_POST['motif']?></title>
     
         <?php
@@ -59,6 +57,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 }
             }          
             $motifs = unserialize($_SESSION['encoded_motifTree'][$_POST['numFila']]);
+            $motifs->generateMotifsPaths();
+            //Para ver que imprime.. el objeto.. si se observa no se pasa la cola de prioridades.
+            //echo var_dump($motifs->getCola());
+            echo '<br><br>';
+            $_SESSION['mejores_motifTree'] = serialize($motifs);
         ?>
 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -73,7 +76,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
         $(function () {
             <?php for($i=0;$i<6;$i++){?>
-            $('#grafica1').highcharts({
+            $('#grafica').highcharts({
                 chart: {
                     type: 'line'
                 },
@@ -279,54 +282,24 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
         </div>
             
     </div>
+    <br><br>
+    <form action="diferentesR.php" method="post"><!--<input type="submit" value="Graficar">-->
+                <input type="hidden" class="form-control" value="<?php echo $_POST['distancia'];?>" name='distancia' id='distancia'>
+                <input type="hidden" class="form-control" value="<?php echo $_POST['radioPB'];?>" name='radioPB' id='radioPB'>
+                <input type="hidden" class="form-control" value="<?php echo $_POST['motif'];?>" name='motif' id='motif'>
+                <input type="hidden" class="form-control" value="<?php echo $_POST['optionType'];?>" name='optionType' id='optionType'>
+                <?php for($j=0;$j<count($secuencia);$j++){ ?>
+                <input type="hidden" class="form-control" value="<?php echo $secuencia[$j];?>" name="<?php echo 'lblSeq'.$j ?>" id="<?php echo 'lblSeq'.$j ?>" >
+                <input type="hidden" class="form-control" value="<?php echo $nombresSeq[$j];?>" name="<?php echo 'selecSeq'.$j; ?>" id="<?php echo 'selecSeq'.$j; ?>">
+                <input type="hidden" class="form-control" value="<?php echo $_POST['numFila'];?>" id="numFila" name="numFila">
+               <?php
+                    }               ?>
+  <br><br>
+                <center><button type="submit" class="btn btn-success btn-large">Más valores de R</button><center>
+                </form>
+  <br><br>  
     
-
-<!----------------------------------------------------------------------------------------------------------------->
-
-
-  <!-- Trigger the modal with a button -->
-  
-  <center><button type="button" class="btn btn-info btn-large" data-toggle="modal" data-target="#graficas">Open Modal</button></center>
-
-  <!-- Modal -->
-  <div class="modal fade" id="graficas" role="dialog">
-    <div class="modal-dialog modal-lg">
     
-      <!-- Modal content-->
-      <div class="modal-content">        
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        
-        
-        
-        </div>
-        <div class="modal-body">
-          <?php 
-            for($i=0; $i<5; $i++){
-          ?>
-    	  <div class="panel panel-default" >
-            <div class="panel-heading"><h4><b>Gráfica de conservación para el motif</b></h4></div>
-                <div class="panel-body" id="grafica1">
-
-                </div>        
-            </div>
-          <?php
-          }
-          ?>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-
-    
-<!----------------------------------------------------------------------------------------------------------------->
-
- 
 	</body>
 </html>
 <?php
