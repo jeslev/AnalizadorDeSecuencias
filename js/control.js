@@ -73,27 +73,27 @@ function fn_enviar(){
 
 	//validar
 	if(!distanciaporc || !isNumber(distanciaporc) || distanciaporc<0 || distanciaporc>100) {
-		alert("Porcentaje de distancia no valido.");
+		alert("Invalid Search Distance.");
 		return false;
 	}
 	else if(!nropb || !isNumber(nropb) || nropb<0) {
-		alert("Número de bases invalido.");
+		alert("Invalid Base Pairs Radio.");
 		return false;
 	}else {
 		var res = 1;
 		res = checkStr(seqsFam[0]);
 		if(res==0){
-				alert("Secuencia #1 no es valida.");
+				alert("Invalid sequence #1.");
 				return false;
 		}
 		for (var i = 1; i< seqsFam.length; i++) {
 			if( tipoFam[i]==-1){
-				alert("No se especifico ortólogo para familia #"+(i+1));
+				alert("Ortholog #"+(i+1)+" not specified.");
 				return false;
 			}
 			res = checkStr(seqsFam[i]);
 			if(res==0){
-				alert("Secuencia #"+(i+1)+" no es valida.");
+				alert("Invalid sequence #"+(i+1)+".");
 				return false;
 			}
 		};

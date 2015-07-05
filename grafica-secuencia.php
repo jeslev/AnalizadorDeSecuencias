@@ -22,7 +22,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
         <script src="js/bootstrap.min.js"></script>
         <!--Library form's-->
         <script src="js/funciones.js"></script>
-		<title>Gráfica de secuencia para <?php echo $_POST['motif']?></title>
+		<title>Sequence's Graphic for <?php echo $_POST['motif']?> Motif</title>
     
         <?php
         
@@ -79,11 +79,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                     type: 'line'
                 },
                 title: {
-                    text: 'Conservación de nuclétidos alrededor del motif'
+                    text: 'Nucleotide Conservation around the Motif'
                 },
                 subtitle: {
                     text: 'By: <a href="http://www.uni.edu.pe">' +
-                        'Biología Computacional 2015-1</a>'
+                        'Computational Biology 2015-1</a>'
                 },
                 xAxis: {
                     allowDecimals: false,
@@ -96,7 +96,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 },
                 yAxis: {
                     title: {
-                        text: 'Frecuencias'
+                        text: 'Frequencies'
                     },
                     labels: {
                         formatter: function () {
@@ -131,13 +131,13 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 series: [        
                 {
                     type: 'column',    
-                    name: 'Frecuencia de nucléotido',
+                    name: 'Nucleotide Frequency',
                     color: '#44A0F0',
                     pointStart: -<?php echo $radioPB ?>,
                     data: [<?php echo $motifs->getStringMeans() ?>]          
                 },
                 {                    
-                    name: 'Ecuación Ideal',            
+                    name: 'Perfect Equation',            
                     data: [<?php echo $motifs->getNormalValues() ?>],            
                 }        
                 ]
@@ -162,11 +162,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             <span class="icon-bar"></span>
           </button>
 
-          <a href="index.php" class="navbar-brand">INICTEL-UNI / Biología Computacional</a>
+          <a href="index.php" class="navbar-brand">INICTEL-UNI / Computational Biology</a>
         </div>
           <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="index.php">Laboratorio Microgravedad</a></li>
+              <li><a href="index.php">Microgravity Lab</a></li>
             </ul>
           
           </div>
@@ -175,7 +175,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
     <div class="container" style="overflow:scroll;">
         <div class="panel panel-default">
-            <div class="panel-heading"><h4><b>Resultados obtenidos</b></h4></div>
+            <div class="panel-heading"><h4><b>Results</b></h4></div>
                 <div class="panel-body">
 
                 <?php echo '<b>R</b> = '.$motifs->getMejorR().'<br><br>';
@@ -189,8 +189,8 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                     }
                 ?>
                 <?php echo '<b>Motif</b> = '.$nombreMotif.'<br><br>'?>
-                <?php echo '<b>Secuencia Consensus ('.strlen($motif).')</b> = '.$motif.'<br><br>'?>
-                <?php echo '<b>Secuencias</b>:<br>'; 
+                <?php echo '<b>Consensus Sequence ('.strlen($motif).')</b> = '.$motif.'<br><br>'?>
+                <?php echo '<b>Sequences</b>:<br>'; 
                     echo '<table border=0>';
                     for($i=0;$i<count($secuencia);$i++) {
                         echo '<tr><td colspan="100"><b>'.$nombresSeq[$i].' ('.strlen($secuencia[$i]).')</b> =</td></tr>';
@@ -209,7 +209,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
     </div>
     <div class="container" >
         <div class="panel panel-default" >
-            <div class="panel-heading"><h4><b>Gráfica de conservación para el motif</b></h4></div>
+            <div class="panel-heading"><h4><b>Motif Conservation - Graphic</b></h4></div>
                 <div class="panel-body" id="grafica">
 
                 </div>        
@@ -217,7 +217,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
     </div>    
     <div class="container" style="overflow:scroll;">
         <div class="panel panel-default">
-            <div class="panel-heading"><h4><b>Desplazamiento del motif</b></h4></div>
+            <div class="panel-heading"><h4><b>Displacement of the Motif</b></h4></div>
                 <div class="panel-body">
                 
                 <canvas id='myCanvas' width='20000' height="<?php echo count($secuencia)*105; ?>"></canvas>
@@ -293,7 +293,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 <input type="hidden" class="form-control" value="<?php echo $maxlen;?>" id="maxLen" name="maxLen">
                <?php
                     }               ?>
-                <center><button type="submit" class="btn btn-success btn-large">Más valores de R</button><center>
+                <center><button type="submit" class="btn btn-success btn-large">More values of R</button><center>
     </form>
     <br><br>  
     

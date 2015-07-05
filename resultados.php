@@ -50,11 +50,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             <span class="icon-bar"></span>
           </button>
 
-          <a href="index.php" class="navbar-brand">INICTEL-UNI / Biología Computacional</a>
+          <a href="index.php" class="navbar-brand">INICTEL-UNI / Computational Biology</a>
         </div>
           <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="index.php">Laboratorio Microgravedad</a></li>
+              <li><a href="index.php">Microgravity Lab</a></li>
             </ul>
           
           </div>
@@ -64,8 +64,8 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
     <!--jumbotron-->
     <div class="jumbotron">
       <div class="container text-center" id="tituloEstado" name="tituloEstado">
-        <h2>Realizando consulta</h2>
-        <p> Por favor espere mientras se procesa su consulta.</p>
+        <h2>Query processing</h2>
+        <p>Please wait while your query is processed.</p>
       </div>
     </div>
 
@@ -108,14 +108,14 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
       <div class="table-responsive" style="overflow:auto;">
         <table class="table table-stripped table-bordered">
           <thead><tr>
-            <th>Código Motif</th>
-            <th>Nombre Motif</th>
-            <th>Secuencia Motif</th>
+            <th>Motif Code</th>
+            <th>Motif Name</th>
+            <th>Motif Sequence</th>
             <th>Drosophila Melanogaster</th>
             <?php for($i=0;$i<$tot;$i++){ ?>
             <th><?php echo $ortologos[$_POST['selecSeq'.($posSeq[$i])]-1]; ?></th>
             <?php } ?>
-            <th>Opciones</th>
+            <th>Options</th>
           </tr>
           </thead>
 
@@ -159,7 +159,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 <input type="hidden" class="form-control" value="<?php echo ($cantFilas-1);?>" id="numFila" name="numFila">
                <?php
                     }               ?>
-                <center><button type="submit" class="btn btn-success btn-large">Graficar</button><center>
+                <center><button type="submit" class="btn btn-success btn-large">Graph</button><center>
                 </form>
             </th>
           </tr>
@@ -174,7 +174,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
         <?php
             if($cantFilas == 0){
         ?>   
-        <h2><center>No se encontraron coincidencias</center><h2/> 
+        <h2><center>No match is found</center><h2/> 
         <?php    
             }
         ?>

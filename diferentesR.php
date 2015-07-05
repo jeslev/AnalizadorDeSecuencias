@@ -61,11 +61,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                     type: 'line'
                 },
                 title: {
-                    text: 'Conservación de nuclétidos alrededor del motif'
+                    text: 'Nucleotide Conservation around the Motif'
                 },
                 subtitle: {
                     text: 'By: <a href="http://www.uni.edu.pe">' +
-                        'Biología Computacional 2015-1</a>'
+                        'Computational Biology 2015-1</a>'
                 },
                 xAxis: {
                     allowDecimals: false,
@@ -78,7 +78,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 },
                 yAxis: {
                     title: {
-                        text: 'Frecuencias'
+                        text: 'Frequencies'
                     },
                     labels: {
                         formatter: function () {
@@ -112,7 +112,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 series: [        
                 {
                     type: 'column',    
-                    name: 'Frecuencia de nucléotido',
+                    name: 'Nucleotide Frequency',
                     color: '#44A0F0',
                     pointStart: -<?php echo $radioPB ?>,
                     data: [<?php $MeanString = '';	   
@@ -125,7 +125,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 	                       ?>]          
                 },
                 {                    
-                    name: 'Ecuación Ideal',            
+                    name: 'Perfect Equation',            
                     data: [<?php $normalValuesString = '';
 	                            for($i = 0; $i<count($arrayCola[$sizeCola][0]); $i++){
 	                                if($i!=0) 
@@ -159,11 +159,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             <span class="icon-bar"></span>
           </button>
 
-          <a href="index.php" class="navbar-brand">INICTEL-UNI / Biología Computacional</a>
+          <a href="index.php" class="navbar-brand">INICTEL-UNI / Computational Biology</a>
         </div>
           <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="index.php">Laboratorio Microgravedad</a></li>
+              <li><a href="index.php">Microgravity Lab</a></li>
             </ul>
           
           </div>
@@ -175,7 +175,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             for($varx=0; $varx<$sizeCola; $varx++){
           ?>
     	  <div class="panel panel-default" >
-            <div class="panel-heading"><h4><b>Gráfica de conservación para el motif</b></h4></div>
+            <div class="panel-heading"><h4><b>Motif Conservation - Graphic</b></h4></div>
                 <div class="panel-body" id="<?php echo 'grafica'.$varx?>">                               
                 </div>
                 <!------------------------------------------------------------>
@@ -210,7 +210,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                          " 
                           context.beginPath();
                           context.strokeStyle = '#444040';
-                          context.fillText('".$nombresSeq[$i]." (".strlen($secuencia[$i]).") - Encontrado en: ".$arrayCola[$varx][2][$i]."',10,".$postextoY.");
+                          context.fillText('".$nombresSeq[$i]." (".strlen($secuencia[$i]).") - Found in: ".$arrayCola[$varx][2][$i]."',10,".$postextoY.");
                           context.moveTo(".$iniX.", ".$inifinY.");
                           context.lineTo(".$finX.", ".$inifinY.");
                           context.lineWidth = 4;

@@ -7,18 +7,18 @@ $(document).ready(
 
             /*actualiza titulo estado*/
 
-            $("#tituloEstado").html("<h2>Calculo finalizado</h2><p>Puedes observar la tabla inferior para los detalles de los resultados.</p>");
+            $("#tituloEstado").html("<h2>Computation finished</h2><p>Analyse the below table for more details.</p>");
 
             $("#agregaFam").click(function () {
                 if( ($("#panelFam .form-group").length+1) > 12) {
-                    alert("Solo se pueden usar hasta 12 familias");
+                    alert("It's not allowed to use more than 12 families");
                     return false;
                 }
                 var id = ($('#panelFam .form-group').length + 1).toString();
                 var texto = " <!--Elemento de 1 secuencia-->"+
                   "<div class=\"form-group\">"+
                    "<div class=\"col-xs-12\">"+
-                          "<select class=\"form-control\" id=\"selecSeq"+id+"\" name=\"selecSeq"+id+"\"><option selected value=\"-1\">Eliga ortologo</option>";
+                          "<select class=\"form-control\" id=\"selecSeq"+id+"\" name=\"selecSeq"+id+"\"><option selected value=\"-1\">Choose an Ortholog</option>";
 
                 var ortologos = [
                                   "Drosophila simulans",
@@ -36,22 +36,22 @@ $(document).ready(
                    texto = texto + "<option value=\""+(i-1)+"\">"+ortologos[i-2]+"</option>";
                 };
                 texto = texto+"</select>"+
-                          "<input type=\"text\" class=\"form-control\" id=\"lblSeq"+id+"\" name=\"lblSeq"+id+"\" placeholder=\"Secuencia\">"+
+                          "<input type=\"text\" class=\"form-control\" id=\"lblSeq"+id+"\" name=\"lblSeq"+id+"\" placeholder=\"Sequence\">"+
                           "<div style=\"position:relative;\">"+
-                            "<a class='btn btn-primary' href='javascript:;'>Desde archivo"+
+                            "<a class='btn btn-primary' href='javascript:;'>Upload from file"+
                               "<input type=\"file\" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:\"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)\";opacity:0;background-color:transparent;color:transparent;' name=\"file_source"+id+"\" id=\"file_source"+id+"\" size=\"300\""+ 
                               "onchange=\""+
                                 "$('#upload-file-info"+id+"').html($(this).val());"+
                                 "var file = document.getElementById('file_source"+id+"');"+
-                                   "if (!file) {   alert('No se encontró el archivo de entrada');   }"+
-                                    "else if (!file.files) {alert('El navegador no soporta la lectura de archivos. Por favor ingrese manualmente'); }"+
-                                    "else if (!file.files[0]) {alert('No ha escogido ningun archivo aun'); } "+             
+                                   "if (!file) {   alert('File not found');   }"+
+                                    "else if (!file.files) {alert('Your browser does not support file upload. Please insert your sequence manually'); }"+
+                                    "else if (!file.files[0]) {alert('No file has been chosen'); } "+             
                                     "else{"+
                                     "input = file.files[0];"+
                                   "var reader = new FileReader();"+
                                   "reader.readAsText(input,'UTF-8');"+
                                   "reader.onload = (function (evt){ $('#lblSeq"+id+"').val(evt.target.result); });"+
-                                  "reader.onerror = (function (evt){$('#lblSeq"+id+"').val('Error al leer el archivo'); });"+
+                                  "reader.onerror = (function (evt){$('#lblSeq"+id+"').val('An error has occured while uploading your file'); });"+
                                     "}"+
                               "\">"+
                             "</a>"+
@@ -66,7 +66,7 @@ $(document).ready(
 
             $("#borrarFam").click(function () {
                 if ($('#panelFam .form-group').length == 1) {
-                    alert("No pueden eliminarse mas familias");
+                    alert("No more families can be removed");
                     return false;
                 }
 

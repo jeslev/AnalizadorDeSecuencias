@@ -41,11 +41,11 @@
             <span class="icon-bar"></span>
           </button>
 
-          <a href="#" class="navbar-brand">INICTEL-UNI / Biología Computacional</a>
+          <a href="#" class="navbar-brand">INICTEL-UNI / Computational Biology </a>
         </div>
           <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Laboratorio Microgravedad</a></li>
+              <li><a href="#">Microgravity Lab</a></li>
             </ul>
           
           </div>
@@ -55,8 +55,8 @@
     <!--jumbotron-->
     <div class="jumbotron">
       <div class="container text-center">
-        <h1>Analizador de Motifs</h1>
-        <p> Programa de reconocimiento de motifs en familia de drosophila.</p>
+        <h1>Motifs Analizer</h1>
+        <p> Motifs Recognition Program in Drosophila Family.</p>
       </div>
     </div>
 
@@ -70,12 +70,12 @@
       <!-- Entrada -->
       <div class="panel panel-default">
         <div class="panel-body">
-            <h3>Entradas</h3>
+            <h3>Input</h3>
    
             <div class="col-xs-8">
               <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Secuencias de Drosophila</h3>
+                    <h3 class="panel-title">Sequence of Drosophila</h3>
                 </div>
                 <div class="panel-body" id="panelFam">
 
@@ -84,9 +84,9 @@
                     <div class="col-xs-12">
 
                           <label>Drosophila Melanogaster</label>
-                          <input type="text" class="form-control" id="lblSeq1" name="lblSeq1" placeholder="Secuencia">
+                          <input type="text" class="form-control" id="lblSeq1" name="lblSeq1" placeholder="Sequence">
                           <div style="position:relative;">
-                            <a class='btn btn-primary' href='javascript:;'>Desde archivo
+                            <a class='btn btn-primary' href='javascript:;'>Upload from file
                               <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source1" id="file_source1" size="300" 
                               onchange="
                                 $('#upload-file-info1').html($(this).val());
@@ -121,8 +121,8 @@
                 </div>
                   <div class="form-group">
                       <label></label>
-                      <button type="button" class="btn btn-success" id="agregaFam">Agregar especie</button> 
-                      <button type="button" class="btn btn-warning" id="borrarFam">Remover</button>      
+                      <button type="button" class="btn btn-success" id="agregaFam">Add species</button> 
+                      <button type="button" class="btn btn-warning" id="borrarFam">Remove</button>      
                   </div> 
                 </div>
 
@@ -130,34 +130,34 @@
            <div class="col-xs-4">
               <div class="panel panel-danger">
                 <div class="panel-heading">
-                  <h3 class="panel-title">Parámetros</h3>
+                  <h3 class="panel-title">Parameteres</h3>
                 </div>
                 <div class="panel-body">
                   
                     <div class="form-group">
-                      <label>Distancia de búsqueda</label>
+                      <label>Search distance</label>
                       <input type="text" class="form-control" id="distancia"  name="distancia" placeholder="(%)">
                     </div>
                     <div class="form-group">
-                      <label >Radio nro de pares</label>
-                      <input type="text" class="form-control" id="nPares" name="nPares" placeholder="(número)">
+                      <label >Base Pairs Radio</label>
+                      <input type="text" class="form-control" id="nPares" name="nPares" placeholder="(number)">
                   </div>
                   <div class="form-group">
-                    <label>Tipo de análisis:</label>
+                    <label>Type of analysis:</label>
                     <div class="radio">
                       <label>
-                        <input type="radio" name="optionType" id="zonapromotora" value="zonapromotora" checked>Zona Promotora
+                        <input type="radio" name="optionType" id="zonapromotora" value="zonapromotora" checked>Promoter Region
                       </label>
                     </div>
                     <div class="radio">
                       <label>
-                        <input type="radio" name="optionType" id="primerintron" value="primerintron">Primer Intrón
+                        <input type="radio" name="optionType" id="primerintron" value="primerintron">First Intron
                       </label>
                     </div>
                   </div> 
                   <div class="form-group">
                       <label></label>
-                      <button type="submit" class="btn btn-success btn-large" >Calcular</button>       
+                      <button type="submit" class="btn btn-success btn-large" >Calculate</button>       
                   </div>
                 </div>
               </div>
@@ -200,27 +200,27 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Verifique los datos:</h4>
+              <h4 class="modal-title">Output Verification:</h4>
             </div>
             <form role="form" action="resultados.php" method='post' id="frm_calcular" name="frm_calcular">
             <div class="modal-body">
             	<div class="form-group">
-            		<label class="control-label">Distancia (%):</label>
+            		<label class="control-label">Distance (%):</label>
                 <label class="control-label"><?php echo $_POST['distancia'];?></label>
             		<input type="hidden" class="form-control" value="<?php echo $_POST['distancia'];?>" name='distancia' id='distancia'>
             	</div>
             	<div class="form-group">
-            		<label class="control-label">Radio de pares de base:</label>
+            		<label class="control-label">Base Pairs Radio:</label>
                 <label class="control-label"><?php echo $_POST['nPares'];?></label>
             		<input type="hidden" class="form-control" value="<?php echo $_POST['nPares'];?>" name='nPares' id='nPares'>
             	</div>
             	<div class="form-group">
-            		<label class="control-label">Tipo de analisis:</label>
-                <label class="control-label"><?php if(strcmp($_POST['optionType'],'zonapromotora')==0) echo 'Zona Promotora'; else echo 'Primer Intron';?></label>
+            		<label class="control-label">Type of Analysis:</label>
+                <label class="control-label"><?php if(strcmp($_POST['optionType'],'zonapromotora')==0) echo 'Promoter Region'; else echo 'First Intron';?></label>
             		<input type="hidden" class="form-control" value="<?php echo $_POST['optionType'];?>" name='optionType' id='optionType'>
             	</div>
             	<div class="form-group">
-            		<label class="control-label">Motif escogido:</label>
+            		<label class="control-label">Motif chosen:</label>
                 <label class="control-label"><?php echo $_POST['inPatron'];?></label>
             		<input type="hidden" class="form-control" value="<?php echo $_POST['inPatron'];?>" name='motif' id='motif'>
             	</div>
@@ -261,8 +261,8 @@
               ?>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-success btn-large" >Confirmar</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-success btn-large" >Confirm</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
             </form>
           </div><!-- /.modal-content -->
