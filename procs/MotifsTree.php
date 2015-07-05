@@ -317,8 +317,9 @@ class MotifsTree {
 	
 	
 	/*
-   	Función que obtiene la recta que más se ajusta a los puntos y el margen error que distan los puntos de la recta aproximada.     �ue obtiene la recta que mⳠse ajusta a los puntos y el margen error que distan los puntos de la recta aproximada.     
-   	- pos: Array de enteros en el cual cada uno indica la posición del motif dentro de la cadena. No importa si dista de la izquierda o de la derecha, es decir no importa si se trata de zona promotora o intron. Por ejemplo, pos[1] tiene la posici󮠤e motif en la primera cadena evaluada, pos[2] en la segunda cadena evaluada, ..
+   	Función que obtiene la recta que más se ajusta a los puntos y el margen error que distan los puntos de la recta aproximada.    
+   	- pos: Array de enteros en el cual cada uno indica la posición del motif dentro de la cadena. No importa si dista de la izquierda o de la derecha, es decir no importa si se trata de zona promotora o intron.
+   	       Por ejemplo, pos[1] tiene la posición de motif en la primera cadena evaluada, pos[2] en la segunda cadena evaludada, ...
    	*/
    	public function valoraCamino($pos) {
       		$n = count($pos); // Longitud de la cadena. Cantidad de valores que hay en la cadena, el cual es el número de familias evaluadas.
