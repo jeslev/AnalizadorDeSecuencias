@@ -193,7 +193,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
             // Grafica la recta que mas se ajusta a los puntos y el margen error que distan los puntos de la recta aproximada. 
                          
-             $n = count($secuencia); // Longitud de la cadena. Cantidad de valores que hay en la cadena, el cual es el  numero de familias evaluadas.
+            /* $n = count($secuencia); // Longitud de la cadena. Cantidad de valores que hay en la cadena, el cual es el  numero de familias evaluadas.
 
              $sx = 0; // Valor de la sumatoria de los valores de x.
              $sxx = 0; // Valor de la sumatoria de los cuadrados de x.
@@ -232,7 +232,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                             ";
                         
                         // Termina el dibujo.
-
+*/
                     echo "context.stroke(); </script>";   
                 ?>
                 </div>        
