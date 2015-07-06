@@ -9,8 +9,8 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="icon" href="icono.png">
@@ -22,7 +22,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
         <script src="js/bootstrap.min.js"></script>
         <!--Library form's-->
         <script src="js/funciones.js"></script>
-		<title>Sequence's Graphic for <?php echo $_POST['motif']?> Motif</title>
+    <title>Sequence's Graphic for <?php echo $_POST['motif']?> Motif</title>
     
         <?php
         
@@ -41,7 +41,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                                   "Drosophila mojavensis",
                                   "Drosophila grimshawi");
         
-        	$motif = $_POST['motif'];
+          $motif = $_POST['motif'];
             $distancia = $_POST['distancia'];
             $radioPB = $_POST['radioPB'];
             $secuencia = array();
@@ -62,16 +62,16 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             $_SESSION['mejores_motifTree'] = $_SESSION['encoded_motifTree'][$_POST['numFila']];
         ?>
 
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<style type="text/css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <style type="text/css">
         body{
             padding-top: 70px;
         }
             ${demo.css}
-		</style>
+    </style>
 
-	</head>
-	<body>
+  </head>
+  <body>
     <!-- Navbar -->
 
     <nav class="navbar navbar-inverse navbar-fixed-top" id="barraNav">
@@ -101,8 +101,10 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             <div class="panel-heading"><h4><b>Results</b></h4></div>
                 <div class="panel-body">
 
-                <?php echo '<b>Mejor Recta: </b> y = '.$motifs->getSlopeData()[0].'x + c<br><br>';
-                    echo '<b>Error: </b> '.$motifs->getSlopeData()[1].'<br><br>';
+                <?php 
+                    $v = $motifs->getSlopeData();
+                    echo '<b>Mejor Recta: </b> y = '.$v[0].'x + c<br><br>';
+                    echo '<b>Error: </b> '.$v[1].'<br><br>';
                     $posX = $motifs->getColaPosiciones(); 
                     $bd = new DatosMotif($motif);
                     $res = $bd->obtenerResultados();
@@ -193,7 +195,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
             // Grafica la recta que mas se ajusta a los puntos y el margen error que distan los puntos de la recta aproximada. 
                          
-            /* $n = count($secuencia); // Longitud de la cadena. Cantidad de valores que hay en la cadena, el cual es el  numero de familias evaluadas.
+             /*$n = count($secuencia); // Longitud de la cadena. Cantidad de valores que hay en la cadena, el cual es el  numero de familias evaluadas.
 
              $sx = 0; // Valor de la sumatoria de los valores de x.
              $sxx = 0; // Valor de la sumatoria de los cuadrados de x.
@@ -241,7 +243,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
     </div>
     <br><br>
     
-	</body>
+  </body>
 </html>
 <?php
 }
