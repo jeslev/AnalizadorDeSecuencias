@@ -162,11 +162,12 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             <span class="icon-bar"></span>
           </button>
 
-          <a href="index.php" class="navbar-brand">INICTEL-UNI / Computational Biology</a>
+          <a href="http://didt.inictel-uni.edu.pe/didt/microgravedad/" class="navbar-brand">INICTEL-UNI / Computational Biology </a>
         </div>
           <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="index.php">Microgravity Lab</a></li>
+              <li><a href="http://didt.inictel-uni.edu.pe/didt/microgravedad/">Microgravity Lab</a></li>
+              <li><a href="about.html">About</a></li>
             </ul>
           
           </div>

@@ -41,11 +41,12 @@
             <span class="icon-bar"></span>
           </button>
 
-          <a href="#" class="navbar-brand">INICTEL-UNI / Computational Biology </a>
+          <a href="http://didt.inictel-uni.edu.pe/didt/microgravedad/" class="navbar-brand">INICTEL-UNI / Computational Biology </a>
         </div>
           <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Microgravity Lab</a></li>
+              <li><a href="http://didt.inictel-uni.edu.pe/didt/microgravedad/">Microgravity Lab</a></li>
+              <li><a href="about.html">About</a></li>
             </ul>
           
           </div>
@@ -55,9 +56,16 @@
     <!--jumbotron-->
     <div class="jumbotron">
       <div class="container text-center">
-        <h1>Motifs Analizer</h1>
-        <p> Motifs Recognition Program in Drosophila Family.</p>
+      <table align="center">
+        <tr>
+          <td colspan="3"><img src="http://bolsatrabajo.uni.edu.pe/images/uni2.png" WIDTH=120 HEIGHT=110 style="  margin-right: 40%" /></td>
+          <td colspan="7"><h1>Motifs Analizer</h1>
+        <p> Motifs Recognition Program in Drosophila Family.</p></td>
+          <td colspan="3"><img src="http://didt.inictel-uni.edu.pe/didt/wp-content/uploads/2014/02/Logo-INICTEL-UNI.png" WIDTH=120 HEIGHT=110 style="  margin-left: 40%"/></td>
+        </tr>
+      </table>
       </div>
+      
     </div>
 
 

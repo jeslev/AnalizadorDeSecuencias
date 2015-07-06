@@ -50,11 +50,12 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
             <span class="icon-bar"></span>
           </button>
 
-          <a href="index.php" class="navbar-brand">INICTEL-UNI / Computational Biology</a>
+          <a href="http://didt.inictel-uni.edu.pe/didt/microgravedad/" class="navbar-brand">INICTEL-UNI / Computational Biology </a>
         </div>
           <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="index.php">Microgravity Lab</a></li>
+              <li><a href="http://didt.inictel-uni.edu.pe/didt/microgravedad/">Microgravity Lab</a></li>
+              <li><a href="about.html">About</a></li>
             </ul>
           
           </div>
@@ -63,10 +64,19 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
     <!--jumbotron-->
     <div class="jumbotron">
-      <div class="container text-center" id="tituloEstado" name="tituloEstado">
-        <h2>Query processing</h2>
-        <p>Please wait while your query is processed.</p>
+      <div class="container text-center">
+      <table align="center">
+        <tr>
+          <td colspan="3"><img src="http://bolsatrabajo.uni.edu.pe/images/uni2.png" WIDTH=120 HEIGHT=110 style="  margin-right: 40%" /></td>
+          <td colspan="7"> <div id="tituloEstado" name="tituloEstado">
+          <h2>Query processing</h2>
+        <p>Please wait while your query is processed.</p></div>
+        </td>
+          <td colspan="3"><img src="http://didt.inictel-uni.edu.pe/didt/wp-content/uploads/2014/02/Logo-INICTEL-UNI.png" WIDTH=120 HEIGHT=110 style="  margin-left: 40%"/></td>
+        </tr>
+      </table>
       </div>
+
     </div>
 
 
