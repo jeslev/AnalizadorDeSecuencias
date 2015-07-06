@@ -274,6 +274,49 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                          }
                           
                     }
+                    
+                     	// Grafica la recta que mas se ajusta a los puntos y el margen error que distan los puntos de la recta aproximada. 
+						 
+			 $n = count($secuencia); // Longitud de la cadena. Cantidad de valores que hay en la cadena, el cual es el  numero de familias evaluadas.
+
+			 $sx = 0; // Valor de la sumatoria de los valores de x.
+			 $sxx = 0; // Valor de la sumatoria de los cuadrados de x.
+			 $sy = 0; // Valor de la sumtaroria de los valores de y.
+			 $sxy = 0; // Valor de la sumatoria de los valores de x por y.
+
+			 for ( $i = 0; $i < $n; $i++ ) {
+				$sx = $sx + $posX[$i];
+				$sy = $sy + $posY[$i];
+				$sxx = $sx + $posX[$i]*$posX[$i];
+				$sxy = $sxy + $posX[$i]*$posY[$i];
+			}
+
+			$ds = $sx * $sx - $n * $sxx; // Determinante del sistema.
+			$dm = $sy * $sx - $n * $sxy; // Determinante de la pendiente.
+			$dd = $sx * $sxy - $sy * $sxx; // Determinante del desfase.
+
+			$m = $dm / $ds; // Pendiente de la recta que mas se asemeja.
+			$df = $dd / $ds; // Desfase de la recta, es decir, y=m*x+df.
+
+			$er = 0.0; // Margen de error de la aproximacion
+			for ( $i = 0; $i < $n; $i++ ) {
+				$er = $er + abs( $posY[$i] - ( $m * $posX[$i] + $df ) );
+			}
+						 
+			 // Se grafica la recta con canvas.
+			 $primerX = ( $posY[0] - $df ) / $m;
+			 $ultimoX = ( $posY[($n-1)] - $df ) / $m;
+			 echo   "
+				context.lineWidth = 6;
+				context.beginPath();
+                        	context.strokeStyle= '#2b886a';
+                        	context.moveTo(".$primerX.", ".$posY[0].");
+                        	context.lineTo(".$ultimoX.", ".$posY[($n-1)].");
+                        	context.stroke();
+                        	";
+                        
+                        // Termina el dibujo.
+                        	
 
                     echo "context.stroke(); </script>";   
                 ?>
