@@ -315,41 +315,5 @@ class MotifsTree {
 		return $result;
 	}
 	
-	
-	/*
-   	Función que obtiene la recta que más se ajusta a los puntos y el margen error que distan los puntos de la recta aproximada.    
-   	- pos: Array de enteros en el cual cada uno indica la posición del motif dentro de la cadena. No importa si dista de la izquierda o de la derecha, es decir no importa si se trata de zona promotora o intron.
-   	       Por ejemplo, pos[1] tiene la posición de motif en la primera cadena evaluada, pos[2] en la segunda cadena evaludada, ...
-   	*/
-   	public function valoraCamino($pos) {
-      		$n = count($pos); // Longitud de la cadena. Cantidad de valores que hay en la cadena, el cual es el número de familias evaluadas.
-      		
-      		$sx = 0; // Valor de la sumatoria de los valores de x.
-      		$sxx = 0; // Valor de la sumatoria de los cuadrados de x.
-      		$sy = 0; // Valor de la sumtaroria de los valores de y.
-	        $sxy = 0; // Valor de la sumatoria de los valores de x por y.
-	        
-		for ( $i = 0; $i < $n; $i++ ) {
-         		$sx = $sx + 10 * $i; // Se agrega de 10 en 10 porque brindará un pendiente de mayor exactitud.
-         		$sy = $sy + $pos[$i];
-         		$sxx = $sx + 100 * $i * $i;
-         		$sxy = $sxy + 10 * $i * $pos[$i];
-      		}
-
-      		$ds = $sx * $sx - $n * $sxx; // Determinante del sistema.
-      		$dm = $sy * $sx - $n * $sxy; // Determinante de la pendiente.
-      		$dd = $sx * $sxy - $sy * $sxx; // Determinante del desfase.
-
-      		$m = $dm / $ds; // Pendiente de la recta que más se asemeja.
-      		$df = $dd / $ds; // Desfase de la recta, es decir, y=m*x+d.
-
-      		$er = 0.0; // Margen de error de la aproximación.
-      		for ( $i = 0; $i < $n; $i++ ) {
-         		$er = $er + abs( $pos[$i] - ( $m * ( $i * 10 ) + $df ) );
-      		}
-      
-      		return array( $m, // Pendiente, pues se valora el camino con menor pendiente.
-            	$er ); // Error, pues no sirve un camino con pendiente 0 si los puntos son demasiados dispersos.
-   	}
 }
 ?>
