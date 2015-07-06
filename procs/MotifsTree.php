@@ -24,7 +24,8 @@ class MotifsTree {
 	private $colaPosiciones = array();
     private $priorityQueue;
     private $arrayCola = array();
-	
+	private $mejorSlope = 0;
+	private $errorSlope = 1000000;
 	/*Constructor
 	     - numfam = Numero de familias(secuencias) a analizar
 	     - seq = Array de las secuencias
@@ -315,5 +316,107 @@ class MotifsTree {
 		return $result;
 	}
 	
+
+	/*
+	CALCULO POR PENDIENTE!!
+	*/	
+	/*
+	Generamos todos los 'caminos'
+	Recorremos solo motifsFound[0] porque generamos combinaciones desde la primera familia (indice 0)
+	*/
+	public function generateMotifsPathsSlope(){
+		foreach($this->motifsFound[0] as $motif){
+			$path = new SplQueue();
+			$path->push($motif);
+			$this->recursiveBuildingSlope($this->distPercent, $motif, 1, $path);
+		}
+				
+	}
+
+
+		/*
+	Funcion recursiva para generar todas las combinaciones
+	El resultado es almacenado en allThePaths
+	*/
+	private function recursiveBuildingSlope($d, $pos, $lvl, $path){
+		
+		$result=array();
+
+		if( $lvl>=$this->numFam) {
+			$finalPath = array();
+			$ii=0;
+			foreach ($path as $elem) {
+				if($this->zonaPromotora=="zonapromotora")
+					$finalPath[] = strlen($this->seqs[$ii])- $elem;
+				else
+					$finalPath[] = $elem;
+				$ii++;
+			}
+
+			$valores = $this->valoraCamino($finalPath);
+			//var_dump($valores);
+			if( abs($this->mejorSlope)< abs($valores[0]) ){
+				$this->errorSlope = $valores[1];
+				$this->mejorSlope = $valores[0];
+				$this->colaPosiciones = array();
+			    foreach($finalPath as $posicion) $this->colaPosiciones[] = $posicion;
+				$raddeg = atan(1.0/$valores[0]);
+			}
+			//echo var_dump($maxY);
+			
+			//$desviationEstandar = $this->standardDeviation($XValues);
+			return;
+		}
+
+		$params = $this->getBorders($pos,$d, $this->lens[$lvl],$this->lens[$lvl-1]);
+		foreach($this->motifsFound[$lvl] as $motif){
+			if ($motif > $params[0] && $motif < $params[1]){
+				$tmp_path = $path;
+				$tmp_path->push($motif);
+				$this->recursiveBuildingSlope($d,$motif,$lvl+1, $tmp_path);
+				$tmp_path->pop();
+			}
+		}
+	}
+
+	/*
+   	Función que obtiene la recta que más se ajusta a los puntos y el margen error que distan los puntos de la recta aproximada.    
+   	- pos: Array de enteros en el cual cada uno indica la posición del motif dentro de la cadena. No importa si dista de la izquierda o de la derecha, es decir no importa si se trata de zona promotora o intron.
+   	       Por ejemplo, pos[1] tiene la posición de motif en la primera cadena evaluada, pos[2] en la segunda cadena evaludada, ...
+   	*/
+   	public function valoraCamino($pos) {
+      		$n = count($pos); // Longitud de la cadena. Cantidad de valores que hay en la cadena, el cual es el número de familias evaluadas.
+      		
+      		$sx = 0; // Valor de la sumatoria de los valores de x.
+      		$sxx = 0; // Valor de la sumatoria de los cuadrados de x.
+      		$sy = 0; // Valor de la sumtaroria de los valores de y.
+	        $sxy = 0; // Valor de la sumatoria de los valores de x por y.
+	        
+		for ( $i = 0; $i < $n; $i++ ) {
+         		$sx = $sx + 10 * $i; // Se agrega de 10 en 10 porque brindará un pendiente de mayor exactitud.
+         		$sy = $sy + $pos[$i];
+         		$sxx = $sx + 100 * $i * $i;
+         		$sxy = $sxy + 10 * $i * $pos[$i];
+      		}
+
+      		$ds = $sx * $sx - $n * $sxx; // Determinante del sistema.
+      		$dm = $sy * $sx - $n * $sxy; // Determinante de la pendiente.
+      		$dd = $sx * $sxy - $sy * $sxx; // Determinante del desfase.
+
+      		$m = $dm / $ds; // Pendiente de la recta que más se asemeja.
+      		$df = $dd / $ds; // Desfase de la recta, es decir, y=m*x+d.
+
+      		$er = 0.0; // Margen de error de la aproximación.
+      		for ( $i = 0; $i < $n; $i++ ) {
+         		$er = $er + abs( $pos[$i] - ( $m * ( $i * 10 ) + $df ) );
+      		}
+      
+      		return array( $m, // Pendiente, pues se valora el camino con menor pendiente.
+            	$er ); // Error, pues no sirve un camino con pendiente 0 si los puntos son demasiados dispersos.
+   	}
+
+   	public function getSlopeData(){
+   		return array($this->mejorSlope, $this->errorSlope);
+   	}
 }
 ?>

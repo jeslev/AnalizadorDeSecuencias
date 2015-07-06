@@ -165,7 +165,9 @@
                   </div> 
                   <div class="form-group">
                       <label></label>
-                      <button type="submit" class="btn btn-success btn-large" >Calculate</button>       
+                      <button type="submit" class="btn btn-success btn-large" id="conserv" name="conserv">Calculate by Conservation</button> 
+                      <br><label></label><br>
+                      <button type="submit" class="btn btn-success btn-large" id="slope" name="slope">Calculate by Slope</button>       
                   </div>
                 </div>
               </div>
@@ -207,10 +209,11 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
+            
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title">Output Verification:</h4>
             </div>
-            <form role="form" action="resultados.php" method='post' id="frm_calcular" name="frm_calcular">
+            <form role="form" action="<?php if( isset($_POST['conserv'])) echo "resultados.php"; if( isset($_POST['slope']))echo "resultados2.php";?>" method='post' id="frm_calcular" name="frm_calcular">
             <div class="modal-body">
             	<div class="form-group">
             		<label class="control-label">Distance (%):</label>
