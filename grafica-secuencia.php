@@ -181,6 +181,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
 
                 <?php echo '<b>R</b> = '.$motifs->getMejorR().'<br><br>';
                     $posX = $motifs->getColaPosiciones(); 
+                    if( strcmp($_POST['optionType'], "zonapromotora") == 0){
+                        for($tt=0;$tt<sizeof($posX);$tt++){
+                            $posX[$tt] = strlen($secuencia[$tt])-$posX[$tt];
+                        }
+                    }
                     $bd = new DatosMotif($motif);
                     $res = $bd->obtenerResultados();
                     $maxlen = 0;
@@ -194,12 +199,14 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 <?php echo '<b>Sequences</b>:<br>'; 
                     echo '<table border=0>';
                     for($i=0;$i<count($secuencia);$i++) {
+                        if(strcmp($_POST['optionType'], "zonapromotora") == 0) $start = strlen($secuencia[$i]) - $posX[$i];
+                        else $start=$posX[$i];
                         echo '<tr><td colspan="100"><b>'.$nombresSeq[$i].' ('.strlen($secuencia[$i]).')</b> =</td></tr>';
                         echo '<tr>';
                         for($j=0;$j< ($maxlen-strlen($secuencia[$i]));$j++) echo '<td>-</td>';
-                        for($j=0;$j<$posX[$i];$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
-                        for($j=$posX[$i];$j<($posX[$i]+strlen($motif));$j++) echo '<td style="background-color: yellow"><b>'.$secuencia[$i][$j].'</b></td>';
-                        for($j=$posX[$i]+strlen($motif);$j<strlen($secuencia[$i]);$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
+                        for($j=0;$j<$start;$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
+                        for($j=$start;$j<($start+strlen($motif));$j++) echo '<td style="background-color: yellow"><b>'.$secuencia[$i][$j].'</b></td>';
+                        for($j=$start+strlen($motif);$j<strlen($secuencia[$i]);$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
                         echo '</tr>';
                     }
                     echo '</table>';
