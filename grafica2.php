@@ -126,7 +126,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                         for($j=0;$j< ($maxlen-strlen($secuencia[$i]));$j++) echo '<td>-</td>';
 
                         for($j=0;$j<$start;$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
-                        for($j=$start;$j<($start+strlen($motif));$j++) echo '<td><b>'.$secuencia[$i][$j].'</b></td>';
+                        for($j=$start;$j<($start+strlen($motif));$j++) echo '<td style="background-color: yellow"><b>'.$secuencia[$i][$j].'</b></td>';
                         for($j=$start+strlen($motif);$j<strlen($secuencia[$i]);$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
                         echo '</tr>';
                     }
