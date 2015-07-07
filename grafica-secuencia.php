@@ -180,12 +180,7 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 <div class="panel-body">
 
                 <?php echo '<b>R</b> = '.$motifs->getMejorR().'<br><br>';
-                    $posX = $motifs->getColaPosiciones(); 
-                    if( strcmp($_POST['optionType'], "zonapromotora") == 0){
-                        for($tt=0;$tt<sizeof($posX);$tt++){
-                            $posX[$tt] = strlen($secuencia[$tt])-$posX[$tt];
-                        }
-                    }
+                    $posX = $motifs->getColaPosiciones();
                     $bd = new DatosMotif($motif);
                     $res = $bd->obtenerResultados();
                     $maxlen = 0;
