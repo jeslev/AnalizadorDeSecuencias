@@ -26,6 +26,7 @@ class MotifsTree {
     private $arrayCola = array();
 	private $mejorSlope = 0;
 	private $errorSlope = 1000000;
+	private $maxLen;
 	/*Constructor
 	     - numfam = Numero de familias(secuencias) a analizar
 	     - seq = Array de las secuencias
@@ -384,6 +385,13 @@ class MotifsTree {
    	- pos: Array de enteros en el cual cada uno indica la posición del motif dentro de la cadena. No importa si dista de la izquierda o de la derecha, es decir no importa si se trata de zona promotora o intron.
    	       Por ejemplo, pos[1] tiene la posición de motif en la primera cadena evaluada, pos[2] en la segunda cadena evaludada, ...
    	*/
+
+	public function maxSizeSeq(){
+		$this->maxLen = 0;
+		for($i=0; $i<count($seqs); $i++)
+			if(strlen($this->seqs)>$this->maxLen) $this->maxLen = strlen($this->seqs);
+	}
+
    	public function valoraCamino($pos) {
       		$n = count($pos); // Longitud de la cadena. Cantidad de valores que hay en la cadena, el cual es el número de familias evaluadas.
       		
@@ -392,12 +400,19 @@ class MotifsTree {
       		$sy = 0; // Valor de la sumtaroria de los valores de y.
 	        $sxy = 0; // Valor de la sumatoria de los valores de x por y.
 	        
+			$this->maxSizeSeq();
+
+			$desplazamiento = 0;
+
 		for ( $i = 0; $i < $n; $i++ ) {
-         		$sx = $sx + 10 * $i; // Se agrega de 10 en 10 porque brindará un pendiente de mayor exactitud.
-         		$sy = $sy + $pos[$i];
-         		$sxx = $sx + 100 * $i * $i;
-         		$sxy = $sxy + 10 * $i * $pos[$i];
-      		}
+				if($this->zonapromotora == "zonzonapromotora") $desplazamiento = $this->maxLen-$this->seqs[$i];
+				else $desplazamiento = 0;
+
+         		$sx = $sx + 100 * $i; // Se agrega de 50 en 50 porque brindará un pendiente de mayor exactitud.
+         		$sy = $sy + ($pos[$i]+$desplazamiento);
+         		$sxx = $sx + 10000 * $i * $i;
+         		$sxy = $sxy + 100 * $i * ($pos[$i]+$desplazamiento);
+      	}
 
       		$ds = $sx * $sx - $n * $sxx; // Determinante del sistema.
       		$dm = $sy * $sx - $n * $sxy; // Determinante de la pendiente.
@@ -408,7 +423,9 @@ class MotifsTree {
 
       		$er = 0.0; // Margen de error de la aproximación.
       		for ( $i = 0; $i < $n; $i++ ) {
-         		$er = $er + abs( $pos[$i] - ( $m * ( $i * 10 ) + $df ) );
+				if($this->zonapromotora == "zonzonapromotora") $desplazamiento = $this->maxLen-$this->seqs[$i];
+				else $desplazamiento = 0;
+         		$er = $er + abs( ($pos[$i]+$desplazamiento) - ( $m * ( $i * 100) + $df ) );
       		}
       
       		return array( $m, // Pendiente, pues se valora el camino con menor pendiente.
