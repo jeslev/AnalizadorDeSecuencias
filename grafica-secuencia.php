@@ -198,10 +198,11 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                         else $start=$posX[$i];
                         echo '<tr><td colspan="100"><b>'.$nombresSeq[$i].' ('.strlen($secuencia[$i]).')</b> =</td></tr>';
                         echo '<tr>';
-                        for($j=0;$j< ($maxlen-strlen($secuencia[$i]));$j++) echo '<td>-</td>';
+                        if(strcmp($_POST['optionType'], "zonapromotora") == 0) for($j=0;$j< ($maxlen-strlen($secuencia[$i]));$j++) echo '<td>-</td>';
                         for($j=0;$j<$start;$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
                         for($j=$start;$j<($start+strlen($motif));$j++) echo '<td style="background-color: yellow"><b>'.$secuencia[$i][$j].'</b></td>';
                         for($j=$start+strlen($motif);$j<strlen($secuencia[$i]);$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
+                        if(strcmp($_POST['optionType'], "zonapromotora") != 0) for($j=0;$j< ($maxlen-strlen($secuencia[$i]));$j++) echo '<td>-</td>';
                         echo '</tr>';
                     }
                     echo '</table>';

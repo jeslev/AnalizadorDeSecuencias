@@ -119,15 +119,15 @@ if( isset($_POST['motif']) && !empty($_POST['motif']) ){
                 <?php echo '<b>Sequences</b>:<br>'; 
                     echo '<table border=0>';
                     for($i=0;$i<count($secuencia);$i++) {
-                        $start = strlen($secuencia[$i]) - $posX[$i];
-                        //echo "SEC ".$start." sfdsd; ".$posX[$i];
+                        if(strcmp($_POST['optionType'], "zonapromotora") == 0) $start = strlen($secuencia[$i]) - $posX[$i];
+                        else $start=$posX[$i];
                         echo '<tr><td colspan="100"><b>'.$nombresSeq[$i].' ('.strlen($secuencia[$i]).')</b> =</td></tr>';
                         echo '<tr>';
-                        for($j=0;$j< ($maxlen-strlen($secuencia[$i]));$j++) echo '<td>-</td>';
-
+                        if(strcmp($_POST['optionType'], "zonapromotora") == 0) for($j=0;$j< ($maxlen-strlen($secuencia[$i]));$j++) echo '<td>-</td>';
                         for($j=0;$j<$start;$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
                         for($j=$start;$j<($start+strlen($motif));$j++) echo '<td style="background-color: yellow"><b>'.$secuencia[$i][$j].'</b></td>';
                         for($j=$start+strlen($motif);$j<strlen($secuencia[$i]);$j++) echo '<td>'.$secuencia[$i][$j].'</td>';
+                        if(strcmp($_POST['optionType'], "zonapromotora") != 0) for($j=0;$j< ($maxlen-strlen($secuencia[$i]));$j++) echo '<td>-</td>';
                         echo '</tr>';
                     }
                     echo '</table>';

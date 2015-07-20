@@ -411,7 +411,7 @@ class MotifsTree {
 			$desplazamiento = 0;
 
 		for ( $i = 0; $i < $n; $i++ ) {
-				if($this->zonapromotora == "zonzonapromotora") $desplazamiento = $this->maxLen-$this->seqs[$i];
+				if($this->zonaPromotora == "zonapromotora") $desplazamiento = $this->maxLen-$this->seqs[$i];
 				else $desplazamiento = 0;
 
          		$sx = $sx + 100 * $i; // Se agrega de 50 en 50 porque brindará un pendiente de mayor exactitud.
@@ -428,13 +428,28 @@ class MotifsTree {
       		$df = $dd / $ds; // Desfase de la recta, es decir, y=m*x+d.
 
       		$er = 0.0; // Margen de error de la aproximación.
+      		$inicio = 0.0;
+      		$fin = 0.0;
+      		$signo = 1;         
       		for ( $i = 0; $i < $n; $i++ ) {
-				if($this->zonapromotora == "zonzonapromotora") $desplazamiento = $this->maxLen-$this->seqs[$i];
+				if($this->zonaPromotora == "zonapromotora") $desplazamiento = $this->maxLen-$this->seqs[$i];
 				else $desplazamiento = 0;
-         		$er = $er + abs( ($pos[$i]+$desplazamiento) - ( $m * ( $i * 100) + $df ) );
+         		$er = $er + (($pos[$i]+$desplazamiento) - ( $m * ( $i * 100) + $df ))*(($pos[$i]+$desplazamiento) - ( $m * ( $i * 100) + $df ));
+         		$er = sqrt($er);
+         		//if($this->zonaPromotora == "zonapromotora"){
+         		//    if($i==0) $fin = $m * ( $i * 100) + $df ;
+         	    //	else $inicio = $m * ( $i * 100) + $df ;         	    	         	    	
+         	    //}
+         	    //else{
+         	        if($i==0) $inicio = $m * ( $i * 100) + $df ;
+         	    	else $fin = $m * ( $i * 100) + $df ;         	    
+         	    //}
+                
       		}
-      
-      		return array( $m, // Pendiente, pues se valora el camino con menor pendiente.
+      		//echo $inicio." ".$fin." ".$er."<br>";
+            if($inicio<=$fin) $signo = -1; 
+            if($this->zonaPromotora == "zonapromotora") $signo = $signo*-1;
+      		return array( $signo*abs($m), // Pendiente, pues se valora el camino con menor pendiente.
             	$er ); // Error, pues no sirve un camino con pendiente 0 si los puntos son demasiados dispersos.
    	}
 
